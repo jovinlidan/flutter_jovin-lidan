@@ -1,22 +1,26 @@
 # (4) Introduction to Algorithm and Dart Programming
 
----
+## Resume
 
-## Resume Materi
+Dalam materi ini, mempelajari :
 
-### 1. Definisi Dart
+1. Definisi Dart
+2. Sintaks Dasar Dart
+3. Operasi pada Dart
+
+### Definisi Dart
 
 Dart adalah bahasa pemrograman yang digunakan untuk membuat software atau perangkat lunak pada beberapa platform seperti website, desktop dan mobile.
 Kelebihan dart adalah type safe, null safety, terdapat banyak library support dan multiplatform.
 
-### 2. Sintaks Dasar Dart
+### Sintaks Dasar Dart
 
 `main()` adalah fungsi utama yang dijalankan pertama kali oleh bahasa pemrograman dart.
 Sintaks dasar dart: -`print()`, untuk mencetak sesuatu ke terminal -`// atau /* teks */`, untuk membuat komentar dimana komentar tidak akan dieksekusi oleh komputer. -`var` pada dart untuk membuat variabel dengan tipe data dynamic tergantung nilai yang diberikan pada saat inisialisasi. -`final`, konstanta / nilai variabel tidak dapat diubah.
 ####Jenis Tipe data Variable: -**`int`**, bilangan bulat -**`String`**, kumpulan karakter -**`bool`**, berisi `true` atau `false` -**`double`**, berisi bilangan desimal atau pecahan
 _Cara membuat variable baru : `{tipe data} {nama variable} = {nilai variable};`_
 
-### 3. Operasi pada Dart
+### Operasi pada Dart
 
 - **Aritmatika**
   1 **`+`**, untuk melakukan operasi penjumlahan
@@ -44,3 +48,40 @@ _Cara membuat variable baru : `{tipe data} {nama variable} = {nilai variable};`_
   1 **`&&`**, bernilai `true` hanya apabila kedua perbandingan di kiri dan di kanan bernilai `true`
   2 **`||`**, bernilai `true` apabila salah satu perbandingan di kiri atau di kanan bernilai `true`
   3 **`!`**,untuk melakukan negasi dari sebuah nilai `bool`, `true` menjadi `false` dan sebaliknya.
+
+## Task
+
+### 1. Implementasi Luas Lingkaran
+
+![Luas Lingkaran](screenshots/Soal1.png "Luas Lingkaran")
+
+```
+void main() {
+  //Membuat Rumus Luas Lingkaran
+  final pi = 3.14;
+  double jari2 = 10;
+
+  print("Luas Lingkaran =  ${pi * (jari2 * jari2)}");
+}
+```
+
+`final` diatas untuk membuat konstant pi tidak dapat diubah untuk menghindari hal-hal yang tidak diinginkan seperti tidak sengaja mengre-assign nilai pi.
+`double` untuk membuat nilai jari-jari dapat memiliki koma.
+
+### 2. Gabungkan 3 Variabel String
+
+![Luas Lingkaran](screenshots/Soal2.png "Luas Lingkaran")
+
+```
+void main() {
+  // Membuat 3 variable string dan menggabungkannya
+  String var1 = "Halo Nama Saya :";
+  String var2 = " Jovin Lidan dan saya sedang";
+  String var3 = " Belajar Flutter di Alterra Academy";
+
+  print(var1 + var2 + var3);
+}
+```
+
+`String` untuk membuat variabel dengan nilai string.
+kemudian memanggil perintah print untuk mencetak nilai ke dalam terminal.
