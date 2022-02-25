@@ -7,7 +7,6 @@ void main() {
   ];
 
   Map<int, List<int>> maps = {}; //Membuat Map
-
   for (int i = 0; i < lists.length; i++) {
     // Loop pertama
     for (int j = 0; j < lists[i].length; j++) {
@@ -25,6 +24,5 @@ void main() {
       maps[i + 1] = [lists[i][j]]; // Jika belum ada key, maka assign key dengan nilai baru
     }
   }
-
   print(maps); // Cetak nilai dari maps
 }
