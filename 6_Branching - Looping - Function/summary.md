@@ -77,7 +77,9 @@ Kode program diatas menampilkan hasil dari percabangan dengan menggunakan sebuah
 
   Solusi diatas menggunakan implementasi dari fungsi dimana dalam fungsi tersebut akan dilakukan beberapa percabangan, apabila memenuhi suatu kondisi maka akan mengembalikan sebuah karakter nilai.
 
-### 1. Implementasi Perulangan dan Fungsi
+### 2. Implementasi Perulangan dan Fungsi
 
 ![Perulangan](screenshots/Soal2.png "Perulangan")
 Kode program diatas untuk menampilkan hasil dari perulangan, dimana setiap perulangan dari _(1 <= x <= nilai)_ akan dikalikan dan dimasukkan dalam sebuah variabel dengan tipe data `double`. Hasil tersebut kemudian dikembalikan dalam sebuah fungsi.
+
+`BigInt` diatas untuk menampung jumlah int yang melebihi batas maksimum tampung dari int.
