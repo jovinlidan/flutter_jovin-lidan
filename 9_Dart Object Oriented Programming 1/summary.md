@@ -140,4 +140,3 @@ Kemudian saya menambahkan masing masing hewan kedalam mobil secara berurutan dim
 - Kemudian memasukkan gajah, sisa kapasitas adalah = 30 - 30 = 0;
 - Kemudian memasukkan kerbau, sisa kapasitas adalah = 0 - 10 = -10 , karena jumlah kapasitas tidak mencukupi, maka kerbau tidak dimasukkan kedalam muatan mobil.
 - Maka totalMuatan adalah 50, dengan sisa muatan adalah 0, dan hewan yang masuk kedalam muatan adalah kambing dan gajah.
--
