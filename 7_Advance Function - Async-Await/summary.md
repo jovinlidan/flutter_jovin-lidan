@@ -136,6 +136,9 @@ for(var key in maps.keys){
 
   Function tersebut mengembalikan Future karena menggunakan async, maka pada main ketika memanggil fungsiPenggali maka harus disertai await untuk menunggu hasil dari fungsi tersebut keluar.
 
+![Fungsi , list dan async await](screenshots/Soal1-No-Async-Await.png "Fungsi , list dan async await")
+Apabila tidak menggunakan await , maka program akan berjalan selesai baru kemudian percabangan selesai.
+
 ### 2. Buatlah list dengan spesifikasi berikut
 
 ![List dan Map](screenshots/Soal2.png "List dan Map")
@@ -159,22 +162,16 @@ for(var key in maps.keys){
 - Buatlah sebuah map dengan menggunakan list tersebut.
 
   ```
-  Map<int, List<int>> maps = {};
-
+  Map<int, int> maps = {}; //Membuat Map
   for (int i = 0; i < lists.length; i++) {
     for (int j = 0; j < lists[i].length; j++) {
-      if (maps.containsKey(i + 1)) {
-        maps.update(i + 1, (value) {
-          var newValue = value;
-          newValue.add(lists[i][j]);
-          return newValue;
-        });
-        continue;
+      if (j == 1) {
+        maps[lists[i][j - 1]] = lists[i][j];
       }
-      maps[i + 1] = [lists[i][j]];
     }
   }
+  print("List = $lists");
   ```
 
   Penjelasan singkat:
-  Untuk membuat maps menggunakan lists diatas adalah pertama-tama lakukan iterasi 2x untuk mendapatkan nilai tiap elemen di dalam list tersebut, jika key i+1 sudah diisi oleh nilai, maka update nilai dari key i+1 dengan nilai sebelumnya ditambah nilai dari `list[i][j]`, Jika belum ada nilai maka masukkan nilai tersebut kedalam maps dengan key `[i+1]`
+  Untuk membuat maps menggunakan lists diatas adalah pertama-tama lakukan iterasi 2x untuk mendapatkan nilai tiap elemen di dalam list tersebut, kemudian jika j == 1 , itu menandakan bahwa elemen tersebut adalah elemen kedua dari sub list, maka masukkan nilai list tersebut sebagai value, dan key nya adalah nilai sebelum nilai tersebut, yaitu j - 1 atau index ke-0.

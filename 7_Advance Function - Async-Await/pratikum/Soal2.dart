@@ -6,23 +6,17 @@ void main() {
     [5, 6]
   ];
 
-  Map<int, List<int>> maps = {}; //Membuat Map
+  Map<int, int> maps = {}; //Membuat Map
   for (int i = 0; i < lists.length; i++) {
     // Loop pertama
     for (int j = 0; j < lists[i].length; j++) {
       // Loop kedua (Nested Loop)
-      if (maps.containsKey(i + 1)) {
-        // Cek apabila didalam map sudah ada nilai dengan key i+1
-        maps.update(i + 1, (value) {
-          // Jika ada, update nilai dari key
-          var newValue = value; // buat variabel baru
-          newValue.add(lists[i][j]); // tambahkan dengan nilai di posisi i , j
-          return newValue; // kembalikan nilai yang sudah diupdate
-        });
-        continue; // continue agar tidak melanjutkan yang dibawah
+      if (j == 1) {
+        // apabila berada pada looping nested ke dua, maka masukkan nilai map dari lists sebelumnya sebagai key dan nilai lists sekarang sebagai value
+        maps[lists[i][j - 1]] = lists[i][j];
       }
-      maps[i + 1] = [lists[i][j]]; // Jika belum ada key, maka assign key dengan nilai baru
     }
   }
-  print(maps); // Cetak nilai dari maps
+  print("List = $lists"); // Cetak nilai dari lists
+  print("Map = $maps"); // Cetak nilai dari maps
 }
