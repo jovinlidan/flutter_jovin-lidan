@@ -5,12 +5,15 @@
 ### 1. Soal 1
 
 **Soal:**
+
 <img src="screenshots/Soal1.png" alt="Soal1" width="500" />
 
 **Output:**
+
 <img src="screenshots/Hasil-Soal1.png" alt="Hasil Soal1" width="500" />
 
 **Penjelasan**
+
 Pada kode diatas saya membuat sebuah fungsi bernama `cekGenap` dengan 1 parameter yaitu angka yang di masukkan melalui input, kemudian dengan return type nya adalah `bool`.
 Jenis fungsi diatas adalahj arrow function, yang didalam fungsi tersebut dicek apakah hasil dari parameter yang dimasukkan apabila di modulo 2 (`arg % 2 == 0`) adalah 0 atau habis dibagi 2. Jika kondisi tersebut dipenuhi maka kembalikan boolean `true` yang menandakan bahwa angka tersebut adalah genap, dan kembalikan boolean `false` yang berarti kebalikannya.
 
@@ -21,12 +24,15 @@ Untuk mengambil inputan gunakan syntax `stdin.readLineSync()`, kemudian parse ke
 ### 2. Soal 2
 
 **Soal:**
+
 <img src="screenshots/Soal2.png" alt="Soal2" width="500" />
 
 **Output:**
+
 <img src="screenshots/Hasil-Soal2.png" alt="Hasil Soal2" width="500" />
 
 **Penjelasan**
+
 Fungsi azimuth menerima 1 parameter yaitu angka , kemudian buat variabel baru masukkan yang nilainya sama seperti angka.
 
 - Apabila angka lebih besar dari atau sama dengan 180 maka nilai dari angka dikurangi 180
@@ -40,13 +46,16 @@ Kemudian panggil fungsi azimuth dengan parameter angka dan cetak hasil dari fung
 ### 3. Soal 3
 
 **Soal:**
+
 <img src="screenshots/Soal3.png" alt="Soal3" width="500" />
 
 **Output:**
+
 <img src="screenshots/Hasil-Soal3-2.png" alt="Hasil Soal3-2" width="500" />
 <img src="screenshots/Hasil-Soal3-1.png" alt="Hasil Soal3-1" width="500" />
 
 **Penjelasan**
+
 `stdout.write()`, digunakan untuk mencetak tanpa memasukkan newline.
 
 Fungsi `cetakJamPasir` menerima 1 parameter , yaitu angka yang dimasukkan melalui inputan.
@@ -95,12 +104,15 @@ Setelah itu pada fungsi main, dilakukan penerimaan inputan dari user dan dikonve
 ### 4. Soal 4
 
 **Soal:**
+
 <img src="screenshots/Soal4.png" alt="Soal3" width="500" />
 
 **Output:**
+
 <img src="screenshots/Hasil-Soal4.png" alt="Hasil Soal3-2" width="500" />
 
 **Penjelasan**
+
 Fungsi cetakDiagonalAngka menerima parameter angka yaitu masukkan dari inputan user.
 
 **Penjelasan Kode Program**
