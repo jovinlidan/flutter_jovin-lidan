@@ -126,7 +126,7 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
--Lakukan perulangan `i` dari `1` hingga `n`, untuk setiap `i` lakukan perulangan `j` dari `i` hingga `i-1`. Kemudian untuk setiap perulangan `j` cetak spasi.Jumlah perulangan `j` akan semakin membesar seiring `i`.
--Setelah perulangan `j` selesai maka cetak angka `i`.
+- Lakukan perulangan `i` dari `1` hingga `n`, untuk setiap `i` lakukan perulangan `j` dari `i` hingga `i-1`. Kemudian untuk setiap perulangan `j` cetak spasi.Jumlah perulangan `j` akan semakin membesar seiring `i`.
+- Setelah perulangan `j` selesai maka cetak angka `i`.
 
 Kemudian panggil fungsi cetakDiagonalAngka dengan parameter n yang berasal dari inputan user yang telah dikonversi ke tipe data `int`.
