@@ -119,3 +119,48 @@ void main() {
 ```
 
 ## Task
+
+### Soal 1 dan Soal 2
+
+**Soal:**
+
+<img src="screenshots/Soal1-dan-Soal2.png" alt="Soal1danSoal2" width="500" />
+
+**Output:**
+
+<img src="screenshots/Hasil-Soal1-dan-Soal2.png" alt="Hasil Soal1-dan-Soal2" width="500" />
+
+**Penjelasan**
+
+- Pertama, membuat class BangunRuang dengan 3 property yaitu panjang, lebar, dan tinggi.Kemudian buat constructor dengan 3 parameter (p,l,t) dan masukkan nilai dari 3 parameter tersebut ke 3 property yang sudah dibuat diatas secara berurutan.
+- Buat Method Volume dengan return data type `int`, didalam fungsi tersebut kembalikan hasil perkalian ke-3 property diatas.
+- Selanjutnya, Buat class Kubus yang mewarisi class BangunRuang. Buat property sisi dengan tipe `int`, dan buat sebuah constructor yang menerima 1 buah parameter yaitu sisi, kemudian panggil constructor yang ada dikelas induk dan masukkan nilai dari parameter sisi kedalam parameter constructor yang ada di class induknya. Setelah itu, masukkan nilai dari parameter sisi kedalam property sisi yang sudah dibuat sebelumnya.
+- Lakukan `@override` atau _Overriding_ pada method Volume yang sudah dibuat di kelas induk _(BangunRuang)_ , kemudian didalam method tersebut kembalikan hasil perkalian dari `sisi * sisi * sisi`.
+- Selanjutnya, buat class Balok yang mewarisi class BangunRuang.Kemudian buat constructor dengan 3 parameter yaitu (p,l,t) dan panggil constructor pada kelas induknya dengan memberikan nilai dari 3 parameter tersebut ke constructor induknya.
+- Lakukan `@override` atau _Overriding_ pada method Volume yang sudah dibuat di kelas induk _(BangunRuang)_ , kemudian didalam method tersebut kembalikan hasil perkalian dari `panjang * lebar * tinggi`.
+
+Pada fungsi main, buat ketiga objek dari class `BangunRuang`, `Kubus`, dan `Balok` kemudian cetak hasil volume dari ketiga objek class tersebut.
+
+### Soal 3 dan Soal 4
+
+**Soal:**
+
+<img src="screenshots/Soal3-dan-Soal4.png" alt="Soal3danSoal4" width="500" />
+
+**Output:**
+
+<img src="screenshots/Hasil-Soal3-dan-Soal4.png" alt="Hasil Soal3-dan-Soal4" width="500" />
+
+**Penjelasan**
+
+- Pertama , Buat class `Matematika` dengan 1 method yaitu hasil yang mengembalikan nilai 0.
+- Kemudian buat class `KelipatanPersekutuanTerkecil` yang mengimplements class Matematika. didalam class tersebut, buat 2 property baru yaitu `x` dan `y` dengan tipe data `int`.
+- Kemudian buat constructor dengan 2 parameter dan masukkan nilai dari 2 parameter tersebut kedalam property `x` dan `y` secara berurutan.
+- Lakukan `@override` atau _Overriding_ method hasil. Isi dari method hasil yaitu ambil nilai terbesar antara x atau y dan masukkan nilai tersebut ke variabel `temp`. Lakukan perulangan apabila variabel `tenp` dapat habis dibagi x dan y maka kembalikan nilai dari variabel `temp`, jika tidak maka nilai dari variabel `temp` di tambah 1.
+- Kemudian buat class `KelipatanPersekutuanTerbesar` yang mengimplements class Matematika. didalam class tersebut, buat 2 property baru yaitu `x` dan `y` dengan tipe data `int`.
+- Kemudian buat constructor dengan 2 parameter dan masukkan nilai dari 2 parameter tersebut kedalam property `x` dan `y` secara berurutan.
+- Lakukan `@override` atau _Overriding_ method hasil.Isi dari method hasil tersebut yaitu buat 3 variabel baru yaitu `tx`, `ty`, dan `temp`. Masukkan nilai `x` dan `y` kevariabel `tx` dan `ty`.
+- Untuk setiap perulangan apabila nilai `ty` bukan 0, maka masukkan nilai `tx` kedalam `temp` , nilai `ty` kedalam `tx`, dan nilai `ty` adalah hasil dari `temp` di modulo `ty`.
+- Jika nilai dari ty adalah 0, maka kembalikan nilai dari tx.
+
+Pada fungsi main, buat objek dari kedua class anak tersebut, dan panggil method hasil dari masing-masing objek tersebut.
