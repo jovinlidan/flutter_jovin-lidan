@@ -2,18 +2,6 @@
 
 ## Resume
 
-Sifat:
-Contructor
-Overriding
-Polymor
-Inheritance
-Interface
-Extends
-
-Abstract
-
-Generics
-
 Dalam materi ini, mempelajari :
 
 1. Lanjutan dan Sifat Object Oriented Programming (OOP)
