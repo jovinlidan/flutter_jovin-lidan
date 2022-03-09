@@ -8,12 +8,12 @@ class Hewan {
 }
 
 class Mobil {
-  late final int totalKapasitas; // Membuat variabel totalKapasitas
+  late final int kapasitas; // Membuat variabel kapasitas
   List<Hewan> muatan = []; // Membuat list dari hewan
 
   Mobil({required int totalKapasitas}) {
     // membuat constructor untuk menginisialisasikan nilai totalKapasitas saat membuat instance dari class
-    this.totalKapasitas = totalKapasitas;
+    this.kapasitas = totalKapasitas;
   }
 
   int totalMuatan() {
@@ -28,7 +28,7 @@ class Mobil {
 
   void tambahMuatan(Hewan hewan) {
     // Fungsi tambah muatan dengan parameter Hewan
-    if (totalMuatan() + hewan.berat <= totalKapasitas) {
+    if (totalMuatan() + hewan.berat <= kapasitas) {
       // Jika total muatan yang ada dilist ditambah berat hewan di parameter masi lebih kecil dari totalkapasitas mobil, maka masukkan hewan kedalam muatan
       muatan.add(hewan);
     }

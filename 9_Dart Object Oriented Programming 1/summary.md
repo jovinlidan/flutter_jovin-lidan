@@ -89,16 +89,16 @@ Kita dapat mengakses sebuah method dengan cara memanggil nama instance dari clas
 - ##### C. Method Tambah muatan, jika kapasitas mencukupi, maka tambahkan muatan data hewan pada list muatan.
 
   ```
-  late final int totalKapasitas;
+  late final int kapasitas;
   Mobil({required int totalKapasitas}) {
-       this.totalKapasitas = totalKapasitas;
+       this.kapasitas = totalKapasitas;
   }
   ```
 
-  Kode diatas untuk membuat sebuah property totalKapasitas yang menandakan maksimum kapasitas tampung sebuah objek mobil. Property total kapasitas akan terisi pada saat membuat objek Mobil dengan menggunakan sebuah constructor dimana parameter totalKapasitas adalah named parameter yang bersifat required atau weajib. Kemudian masukkan nilai totalKapasitas dari parameter kedalam property totalKapasitas class.
+  Kode diatas untuk membuat sebuah property kapasitas yang menandakan maksimum kapasitas tampung sebuah objek mobil. Property kapasitas akan terisi pada saat membuat objek Mobil dengan menggunakan sebuah constructor dimana parameter totalKapasitas adalah named parameter yang bersifat required atau wajib. Kemudian masukkan nilai totalKapasitas dari parameter kedalam property kapasitas didalam class.
   Named parameter adalah parameter yang ketika kita panggil , kita dapat mengisinya secara tidak berurutan , dan bergantung pada namanya masing-masing
 
-  `final` digunakan agar property totalKapasitas tidak dapat diubah lagi dari luar kelas ketika objek dibuat
+  `final` digunakan agar property kapasitas tidak dapat diubah lagi dari luar kelas ketika objek dibuat
 
 ### 2. Pada class Mobil, tambahkan method totalMuatan untuk menghitung total muatan yang diangkut oleh mobil tersebut.
 
@@ -133,10 +133,10 @@ print("Total Muatan Mobil Lambo = ${lambo.totalMuatan()}");
 
 ```
 
-Pada Kode program diatas, saya membuat objek hewan kambing, kerbau , gajah dengan masing masing berat 20,10 dan 30. Kemudian saya membuat objek mobil dengan totalKapasitas yaitu 50.
+Pada Kode program diatas, saya membuat objek hewan kambing, kerbau , gajah dengan masing masing berat 20,10 dan 30. Kemudian saya membuat objek mobil dengan kapasitas yaitu 50.
 Kemudian saya menambahkan masing masing hewan kedalam mobil secara berurutan dimulai dari kambing, gajah dan kerbau.
 
-- Pada saat memasukkan kambing, sisa kapasitas adalah totalKapasitas - (total muatan ) = 50 - 20 = 30
+- Pada saat memasukkan kambing, sisa kapasitas adalah kapasitas - (total muatan ) = 50 - 20 = 30
 - Kemudian memasukkan gajah, sisa kapasitas adalah = 30 - 30 = 0;
 - Kemudian memasukkan kerbau, sisa kapasitas adalah = 0 - 10 = -10 , karena jumlah kapasitas tidak mencukupi, maka kerbau tidak dimasukkan kedalam muatan mobil.
 - Maka totalMuatan adalah 50, dengan sisa muatan adalah 0, dan hewan yang masuk kedalam muatan adalah kambing dan gajah.
