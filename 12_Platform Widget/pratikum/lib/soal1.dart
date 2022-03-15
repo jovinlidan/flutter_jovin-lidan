@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pratikum/badge.dart';
 
 class Soal1 extends StatelessWidget {
   const Soal1({Key? key}) : super(key: key);
@@ -6,9 +7,13 @@ class Soal1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Telegram"),
+          title: const Text(
+            "Telegram",
+            style: TextStyle(fontSize: 20),
+          ),
           centerTitle: false,
           actions: const [
             Padding(
@@ -31,31 +36,42 @@ class CustomChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: ListTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Jovin Lidan",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+        ListTile(
+          title: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Jovin Lidan",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  "Jovin: Wow, nice",
-                  style: TextStyle(
-                    color: Colors.grey[600],
+                  Text("5:54 PM", style: TextStyle(fontSize: 12, color: Colors.grey[600]))
+                ],
+              ),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Jovin: Wow, nice🤪🤪",
+                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
                   ),
-                ),
-              ],
-            ),
-            leading: const CircleAvatar(
-              backgroundColor: Colors.red,
-              radius: 24,
-            ),
+                  const CustomBadges(
+                    color: Colors.green,
+                    size: 24,
+                    child: Text("1", style: TextStyle(color: Colors.white, fontSize: 12)),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          leading: const CircleAvatar(
+            backgroundColor: Colors.red,
+            radius: 30,
           ),
         ),
         const Divider(),
@@ -66,11 +82,18 @@ class CustomChat extends StatelessWidget {
 
 class CustomBody extends StatelessWidget {
   const CustomBody({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.only(top: 8),
       children: const [
+        CustomChat(),
+        CustomChat(),
+        CustomChat(),
+        CustomChat(),
+        CustomChat(),
+        CustomChat(),
+        CustomChat(),
         CustomChat(),
         CustomChat(),
         CustomChat(),
