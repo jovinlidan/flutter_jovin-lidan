@@ -71,7 +71,6 @@ class Soal2 extends StatelessWidget {
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -114,9 +113,12 @@ class ChatScreen extends StatelessWidget {
               preferredSize: const Size(0.0, 80.0),
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: CupertinoSearchTextField(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: CupertinoSearchTextField(
+                        prefixInsets: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 2.7,
+                    )),
                   ),
                   TabBar(
                     isScrollable: true,
