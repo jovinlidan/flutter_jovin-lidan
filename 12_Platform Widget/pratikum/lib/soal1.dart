@@ -24,6 +24,10 @@ class Soal1 extends StatelessWidget {
         ),
         body: const CustomBody(),
         drawer: const CustomDrawer(),
+        floatingActionButton: const FloatingActionButton(
+          child: Icon(Icons.edit),
+          onPressed: null,
+        ),
       ),
     );
   }

@@ -97,6 +97,10 @@ class Soal1 extends StatelessWidget {
         ),
         body: const CustomBody(),
         drawer: const CustomDrawer(),
+        floatingActionButton: const FloatingActionButton(
+        child: Icon(Icons.edit),
+        onPressed: null,
+        ),
       ),
     );
   }
@@ -108,7 +112,7 @@ Constructor home diisi dengan Scaffold, kemudian property appBar diisi dengan Ap
 Centertitle = false, untuk mengubah posisi title ke bagian kiri (untuk iOS).
 actions diisi dengan icon search, dan diberikkan padding kanan kiri sebesar 16.
 
-Kemudian pada bagian Scaffold, constructor body dan drawer diisi dengan CustomWidget yaitu CustomBody dan CustomDrawer.
+Kemudian pada bagian Scaffold, constructor body dan drawer diisi dengan CustomWidget yaitu CustomBody dan CustomDrawer. Kemudian terdapat Floating action button yang didalamnya terdapat icon dengan constructor onpressed null
 
 **Widget (CustomBody)**
 

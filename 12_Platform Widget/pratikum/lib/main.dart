@@ -6,5 +6,5 @@ import 'package:pratikum/soal2.dart';
 // Silahkan uncomment salah satu Soal1 / Soal2 dibawah dan lakukan hot restart pada aplikasi
 void main() {
   // runApp(Soal1());
-  runApp(Soal2());
+  runApp(Soal1());
 }
