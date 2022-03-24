@@ -8,16 +8,13 @@ import 'package:pratikum/label.dart';
 import 'package:pratikum/preview_post_screen.dart';
 
 class FormData {
-  String? file;
+  File? file;
   Color? color;
   DateTime? date;
   String? caption;
 
   bool isValid() {
-    return (file?.isNotEmpty ?? false) &&
-        color != null &&
-        date != null &&
-        (caption?.isNotEmpty ?? false);
+    return (file != null) && color != null && date != null && (caption?.isNotEmpty ?? false);
   }
 }
 
@@ -33,7 +30,7 @@ class CreatePostScreen extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(21, 84, 246, 1),
       ),
       drawer: const CustomDrawer(),
-      body: const FormWidget(),
+      body: const SingleChildScrollView(child: FormWidget()),
     );
   }
 }
@@ -58,7 +55,7 @@ class _FormState extends State<FormWidget> {
     if (res != null) {
       File file = File(res.files.single.path!);
       setState(() {
-        formValue.file = file.path;
+        formValue.file = file;
       });
     }
   }
@@ -126,9 +123,11 @@ class _FormState extends State<FormWidget> {
             const LabelWidget(label: "Cover"),
             ElevatedButton(
               onPressed: handlePickFile,
-              child: Text(formValue.file != null
-                  ? "Ubah File (${formValue.file?.split('/')[(formValue.file?.split('/').length)! - 1]})"
-                  : "Pilih File"),
+              child: Text(
+                formValue.file != null
+                    ? "Ubah File (${formValue.file?.path.split('/')[(formValue.file?.path.split('/').length)! - 1]})"
+                    : "Pilih File",
+              ),
               style: ElevatedButton.styleFrom(
                 primary: Colors.grey,
               ),

@@ -33,7 +33,7 @@ class CustomBody extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 16 / 8,
-            child: Image.asset(data.file!, fit: BoxFit.cover),
+            child: Image.file(data.file!, fit: BoxFit.cover),
           ),
           const SizedBox(
             height: 20,
