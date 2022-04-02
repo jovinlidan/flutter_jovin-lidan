@@ -14,3 +14,19 @@ class AddContact extends ContactEvent {
   @override
   List<Object?> get props => [person];
 }
+
+class UpdateContact extends ContactEvent {
+  int idx;
+  Person person;
+
+  UpdateContact(this.person, this.idx);
+  @override
+  List<Object?> get props => [person, idx];
+}
+
+class DeleteContact extends ContactEvent {
+  int idx;
+  DeleteContact(this.idx);
+  @override
+  List<Object?> get props => [idx];
+}
