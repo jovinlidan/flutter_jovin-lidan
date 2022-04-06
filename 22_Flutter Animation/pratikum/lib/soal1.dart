@@ -23,7 +23,7 @@ class _Soal1State extends State<Soal1> {
             child: AnimatedContainer(
               width: isBig ? 250 : 150,
               height: isBig ? 250 : 150,
-              color: Colors.blue,
+              color: isBig ? Colors.blue : Colors.red,
               duration: const Duration(milliseconds: 500),
             ),
           ),
