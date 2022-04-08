@@ -57,6 +57,9 @@ class _NewContactScreenState extends State<NewContactScreen> {
           ),
           'idx': updateIdx,
         });
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Tanggal Lahir wajib diisi")));
       }
     }
   }

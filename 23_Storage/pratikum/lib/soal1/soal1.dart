@@ -177,19 +177,20 @@ class _CustomBodyState extends State<CustomBody> {
           )
         ],
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => CustomCard(
-          person: context.read<ContactProvider>().contacts[index],
-          onDelete: () {
-            List<Person> temp = context.read<ContactProvider>().contacts;
-            temp.removeAt(index);
-            context.watch<ContactProvider>().contacts = temp;
-          },
-          onUpdate: () => onNavigateNewContactScreen(context, context.watch<ContactProvider>(),
-              context.read<ContactProvider>().contacts[index], index),
+      body: Consumer<ContactProvider>(
+        builder: (_, data, __) => ListView.builder(
+          itemBuilder: (ctx, index) => CustomCard(
+            person: data.contacts[index],
+            onDelete: () {
+              List<Person> temp = [...data.contacts];
+              temp.removeAt(index);
+              data.contacts = temp;
+            },
+            onUpdate: () => onNavigateNewContactScreen(context, data, data.contacts[index], index),
+          ),
+          padding: const EdgeInsets.only(top: 8),
+          itemCount: context.watch<ContactProvider>().contacts.length,
         ),
-        padding: const EdgeInsets.only(top: 8),
-        itemCount: context.read<ContactProvider>().contacts.length,
       ),
     );
   }

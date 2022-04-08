@@ -14,8 +14,8 @@ class ContactProvider with ChangeNotifier {
 
   set contacts(List<Person> val) {
     _contacts = val;
+    updatePreferences(val);
     notifyListeners();
-    // updatePreferences(val);
   }
 
   void updatePreferences(List<Person> val) async {
@@ -26,7 +26,6 @@ class ContactProvider with ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     String? personsStr = prefs.getString('personsProvider');
     if (personsStr != null) {
-      print(personsStr);
       contacts = Person.decode(personsStr);
     }
   }
