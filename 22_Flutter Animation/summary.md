@@ -76,16 +76,17 @@ _Pada Folder Screenshots terdapat video hasil_
 GestureDetector(
     onTap: () => setState(() => isBig = !isBig),
     child: AnimatedContainer(
-        width: isBig ? 250 : 150,
-        height: isBig ? 250 : 150,
-        color: isBig ? Colors.blue : Colors.red,
-        duration: const Duration(milliseconds: 500),
-    ),
+              width: isBig ? 250 : 150,
+              height: isBig ? 250 : 150,
+              duration: const Duration(milliseconds: 500),
+              child: Image.network(
+                  "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"),
+            ),
     ),
 ```
 
 Pada kode diatas saya membuat sebuah state boolean isBig untuk menentukan bentuk container apakah besar atau kecil.
-Jika GestureDetector di tap maka akan mengubah nilai dari isBig ke negasi dari nilai tersebut. Secara otomatis apabila ada width atau height atau color yang berubah maka AnimatedContainer akan merubah property tersebut dengan animasi.
+Jika GestureDetector di tap maka akan mengubah nilai dari isBig ke negasi dari nilai tersebut. Secara otomatis apabila ada width atau height yang berubah maka AnimatedContainer akan merubah property tersebut dengan animasi.
 
 ---
 

@@ -23,8 +23,9 @@ class _Soal1State extends State<Soal1> {
             child: AnimatedContainer(
               width: isBig ? 250 : 150,
               height: isBig ? 250 : 150,
-              color: isBig ? Colors.blue : Colors.red,
               duration: const Duration(milliseconds: 500),
+              child: Image.network(
+                  "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"),
             ),
           ),
         ),
