@@ -9,8 +9,11 @@ class ContactProvider with ChangeNotifier {
   }
 
   List<Person> _contacts = [];
+  bool _isLoading = false;
 
   List<Person> get contacts => _contacts;
+
+  bool get isLoading => _isLoading;
 
   set contacts(List<Person> val) {
     _contacts = val;
@@ -23,7 +26,11 @@ class ContactProvider with ChangeNotifier {
   }
 
   void init() async {
+    _isLoading = true;
     prefs = await SharedPreferences.getInstance();
+    // Uncomment kode dibawah untuk melihat animasi loading lebih lama
+    // await Future.delayed(const Duration(seconds: 2));
+    _isLoading = false;
     String? personsStr = prefs.getString('personsProvider');
     if (personsStr != null) {
       contacts = Person.decode(personsStr);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:pratikum/model.dart';
 import 'package:pratikum/soal1/new_contact_screen.dart';
 import 'package:pratikum/soal1/contact_provider.dart';
@@ -178,20 +179,24 @@ class _CustomBodyState extends State<CustomBody> {
         ],
       ),
       body: Consumer<ContactProvider>(
-        builder: (_, data, __) => ListView.builder(
-          itemBuilder: (ctx, index) => CustomCard(
-            person: data.contacts[index],
-            onDelete: () {
-              List<Person> temp = [...data.contacts];
-              temp.removeAt(index);
-              data.contacts = temp;
-            },
-            onUpdate: () => onNavigateNewContactScreen(context, data, data.contacts[index], index),
-          ),
-          padding: const EdgeInsets.only(top: 8),
-          itemCount: context.watch<ContactProvider>().contacts.length,
-        ),
-      ),
+          builder: (_, data, __) => !data.isLoading
+              ? ListView.builder(
+                  itemBuilder: (ctx, index) => CustomCard(
+                    person: data.contacts[index],
+                    onDelete: () {
+                      List<Person> temp = [...data.contacts];
+                      temp.removeAt(index);
+                      data.contacts = temp;
+                    },
+                    onUpdate: () =>
+                        onNavigateNewContactScreen(context, data, data.contacts[index], index),
+                  ),
+                  padding: const EdgeInsets.only(top: 8),
+                  itemCount: context.watch<ContactProvider>().contacts.length,
+                )
+              : const Center(
+                  child: LoadingIndicator(indicatorType: Indicator.ballClipRotatePulse),
+                )),
     );
   }
 }
