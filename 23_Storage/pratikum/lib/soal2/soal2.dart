@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:pratikum/model.dart';
 import 'package:pratikum/soal2/bloc/contact_bloc.dart';
 import 'package:pratikum/soal2/bloc/history_bloc.dart';
 import 'package:pratikum/soal2/history_screen.dart';
 import 'package:pratikum/soal2/new_contact_screen.dart';
 
-class Soal1Soal2 extends StatelessWidget {
-  const Soal1Soal2({Key? key}) : super(key: key);
+class Soal2 extends StatelessWidget {
+  const Soal2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const CustomBody(),
-        NewContactScreen.newContactScreenName: (context) => const NewContactScreen(),
-        HistoryScreen.historyScreenName: (context) => const HistoryScreen()
-      },
-      debugShowCheckedModeBanner: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ContactBloc>(create: (context) => ContactBloc()..add(InitContact())),
+        BlocProvider<HistoryBloc>(create: (context) => HistoryBloc()..add(InitHistory())),
+      ],
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const CustomBody(),
+          NewContactScreen.newContactScreenName: (context) => const NewContactScreen(),
+          HistoryScreen.historyScreenName: (context) => const HistoryScreen()
+        },
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
@@ -187,15 +194,19 @@ class _CustomBodyState extends State<CustomBody> {
         ],
       ),
       body: BlocBuilder<ContactBloc, ContactState>(
-        builder: (context, state) => ListView.builder(
-          itemBuilder: (context, index) => CustomCard(
-            person: state.data[index],
-            onDelete: () => BlocProvider.of<ContactBloc>(context).add(DeleteContact(index)),
-            onUpdate: () => onNavigateNewContactScreen(context, state.data[index], index),
-          ),
-          padding: const EdgeInsets.only(top: 8),
-          itemCount: state.data.length,
-        ),
+        builder: (context, state) => state is ContactLoading
+            ? const Center(
+                child: LoadingIndicator(indicatorType: Indicator.ballClipRotatePulse),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) => CustomCard(
+                  person: state.data[index],
+                  onDelete: () => BlocProvider.of<ContactBloc>(context).add(DeleteContact(index)),
+                  onUpdate: () => onNavigateNewContactScreen(context, state.data[index], index),
+                ),
+                padding: const EdgeInsets.only(top: 8),
+                itemCount: state.data.length,
+              ),
       ),
     );
   }

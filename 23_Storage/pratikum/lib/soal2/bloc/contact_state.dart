@@ -3,50 +3,40 @@ part of 'contact_bloc.dart';
 abstract class ContactState extends Equatable {
   List<Person> data = [];
 
-  ContactState(this.data);
+  ContactState({List<Person>? val}) {
+    if (val != null) {
+      data = val;
+    }
+  }
   @override
   List<Object?> get props => [data];
 }
 
+class ContactLoading extends ContactState {}
+
 class ContactInitial extends ContactState {
-  ContactInitial()
-      : super([
-          Person(
-              name: "Leane Graham",
-              phone: "0812314362",
-              gender: RadioOption.laki,
-              languages: [],
-              kelas: "A",
-              date: DateTime.now()),
-          Person(
-              name: "Hwang ni",
-              phone: "0812314362",
-              gender: RadioOption.laki,
-              languages: [],
-              kelas: "B",
-              date: DateTime.now()),
-        ]);
+  ContactInitial() : super();
   @override
   List<Object?> get props => [];
 }
 
 class AddContactState extends ContactState {
   final List<Person> newData;
-  AddContactState(this.newData) : super(newData);
+  AddContactState(this.newData) : super(val: newData);
   @override
   List<Object?> get props => [data];
 }
 
 class UpdateContactState extends ContactState {
   final List<Person> newData;
-  UpdateContactState(this.newData) : super(newData);
+  UpdateContactState(this.newData) : super(val: newData);
   @override
   List<Object?> get props => [data];
 }
 
 class DeleteContactState extends ContactState {
   final List<Person> newData;
-  DeleteContactState(this.newData) : super(newData);
+  DeleteContactState(this.newData) : super(val: newData);
   @override
   List<Object?> get props => [data];
 }

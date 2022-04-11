@@ -7,6 +7,8 @@ abstract class ContactEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class InitContact extends ContactEvent {}
+
 class AddContact extends ContactEvent {
   Person person;
 

@@ -4,20 +4,26 @@ part of 'history_bloc.dart';
 abstract class HistoryState extends Equatable {
   List<HistoryCall> data = [];
 
-  HistoryState(this.data);
+  HistoryState({List<HistoryCall>? data}) {
+    if (data != null) {
+      this.data = data;
+    }
+  }
   @override
   List<Object?> get props => [data];
 }
 
+class HistoryLoading extends HistoryState {}
+
 class HistoryInitial extends HistoryState {
-  HistoryInitial() : super([]);
+  HistoryInitial() : super(data: []);
   @override
   List<Object?> get props => [];
 }
 
 class AddHistoryState extends HistoryState {
   final List<HistoryCall> newData;
-  AddHistoryState(this.newData) : super(newData);
+  AddHistoryState(this.newData) : super(data: newData);
   @override
   List<Object?> get props => [data];
 }

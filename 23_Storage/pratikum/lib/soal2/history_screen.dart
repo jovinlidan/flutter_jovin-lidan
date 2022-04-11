@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:pratikum/model.dart';
 import 'package:pratikum/soal2/bloc/history_bloc.dart';
 
@@ -14,10 +15,14 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("History Calls")),
       body: BlocBuilder<HistoryBloc, HistoryState>(
-        builder: (context, state) => ListView.builder(
-          itemBuilder: (context, index) => CustomCard(history: state.data[index]),
-          itemCount: state.data.length,
-        ),
+        builder: (context, state) => state is HistoryLoading
+            ? const Center(
+                child: LoadingIndicator(indicatorType: Indicator.ballClipRotatePulse),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) => CustomCard(history: state.data[index]),
+                itemCount: state.data.length,
+              ),
       ),
     );
   }

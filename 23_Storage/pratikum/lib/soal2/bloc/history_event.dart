@@ -8,6 +8,8 @@ abstract class HistoryEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class InitHistory extends HistoryEvent {}
+
 class AddHistory extends HistoryEvent {
   HistoryCall history;
 
