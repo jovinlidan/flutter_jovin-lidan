@@ -64,13 +64,13 @@ Cara mengubah data menjadi format JSON dapat menggunakan package `dart:convert` 
 
 **Output:**
 
-<img src="screenshots/ContactDetail.png" alt="Hasil" width="250" />
+<img src="screenshots/LoadingContactList.png" alt="Hasil" width="250" />
 <img src="screenshots/ContactList.png" alt="Hasil" width="250" />
 <img src="screenshots/CreateContact.png" alt="Hasil" width="250" />
 <img src="screenshots/CreateContactSuccess.png" alt="Hasil" width="250" />
-<img src="screenshots/Error.png" alt="Hasil" width="250" />
 <img src="screenshots/LoadingContactDetail.png" alt="Hasil" width="250" />
-<img src="screenshots/LoadingContactList.png" alt="Hasil" width="250" />
+<img src="screenshots/ContactDetail.png" alt="Hasil" width="250" />
+<img src="screenshots/Error.png" alt="Hasil" width="250" />
 
 **Penjelasan:**
 
