@@ -7,7 +7,10 @@ class Repositories {
     // ignore: prefer_conditional_assignment
     if (_dio == null) {
       // Jika instance belum ada, maka lakukan inisialisasi
-      _dio = Dio();
+      _dio = Dio(
+        BaseOptions(
+            baseUrl: 'https://my-json-server.typicode.com/hadihammurabi/flutter-webservice/'),
+      );
     }
   }
   factory Repositories() {
@@ -19,7 +22,8 @@ class Repositories {
     return Future.value(res?.data);
   }
 
-  void post<T>({required String url, required T data}) async {
-    await _dio?.post(url, data: data);
+  Future<dynamic>? post<T>({required String url, required T data}) async {
+    Response<dynamic>? res = await _dio?.post(url, data: data);
+    return Future.value(res?.data);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:pratikum/api-class/contact.model.dart';
 import 'package:pratikum/repositories.dart';
 
 class PostContact {
@@ -5,8 +6,7 @@ class PostContact {
   PostContact() {
     repo = Repositories();
   }
-  // void post({required Person}) async {
-  //   return repo.get<Map<String, dynamic>>(
-  //       url: "https://my-json-server.typicode.com/hadihammurabi/flutter-webservice/contacts");
-  // }
+  Future<dynamic>? post({required Contact contact}) async {
+    return await repo.post<Map<String, dynamic>>(url: "contacts", data: Contact.encodeOne(contact));
+  }
 }

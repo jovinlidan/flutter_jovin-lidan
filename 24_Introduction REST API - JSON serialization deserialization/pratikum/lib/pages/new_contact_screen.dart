@@ -18,7 +18,7 @@ class _NewContactScreenState extends State<NewContactScreen> {
   void handleSubmit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      Navigator.pop(context, Contact(id: 1, name: fullName!, phone: phoneNumber!));
+      Navigator.pop(context, Contact(id: 4, name: fullName!, phone: phoneNumber!));
     }
   }
 
