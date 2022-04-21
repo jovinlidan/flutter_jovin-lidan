@@ -87,6 +87,13 @@ Setelah itu, untuk mengenerate file mocknya dapat menggunakan perintah `flutter 
 <img src="screenshots/Hasil7.png" alt="Hasil" width="250" />
 <img src="screenshots/Hasil8.png" alt="Hasil" width="250" />
 
+#### Test
+
+<img src="screenshots/Test1.png" alt="Hasil" width="250" />
+<img src="screenshots/Test2.png" alt="Hasil" width="250" />
+<img src="screenshots/Test3.png" alt="Hasil" width="250" />
+<img src="screenshots/Test4.png" alt="Hasil" width="250" />
+
 #### MockTest
 
 <img src="screenshots/MockTest1.png" alt="Hasil" width="250" />
@@ -176,3 +183,39 @@ getAllFoods() async {
 ```
 
 Fungsi diatas berisi sebuah try catch, apabila proses pemanggilan API mengalami error maka ubah status ke error dan masukkan pesan error kedalam class tersebut.Jika tidak maka tampilkan success dan masukkan datanya. Apabila loading maka tampilkan loading tanpa memberikan sebuah data atau message.
+
+---
+
+```dart
+test('get all contacts returns state', () async {
+      var contactViewModel = ContactsViewModel();
+      expect(contactViewModel.contacts.status, ApiStatus.success);
+
+      contactViewModel.getAllContacts();
+      expect(contactViewModel.contacts.status, ApiStatus.loading);
+
+      await contactViewModel.getAllContacts();
+
+      expect(contactViewModel.contacts.status, ApiStatus.success);
+    });
+```
+
+Kode diatas mengecek apakah state awal adalah success, ketika getAllContacts dipanggil tanpa await maka diharapkan menghasilkan state loading, jika dilakukan await maka diharapkan menghasilkan state success
+
+---
+
+```dart
+ test('get all foods returns state', () async {
+      var foodsViewModel = FoodsViewModel();
+      expect(foodsViewModel.foods.status, ApiStatus.success);
+
+      foodsViewModel.getAllFoods();
+      expect(foodsViewModel.foods.status, ApiStatus.loading);
+
+      await foodsViewModel.getAllFoods();
+
+      expect(foodsViewModel.foods.status, ApiStatus.loading);
+    });
+```
+
+Kode diatas mengecek apakah state awal adalah success, ketika getAllContacts dipanggil tanpa await maka diharapkan menghasilkan state loading, jika dilakukan await maka diharapkan menghasilkan state loading, tetapi state aslinya merupakan success, maka akan terjadi error dengan kode diatas.
