@@ -42,28 +42,28 @@ class _ContactCreateScreenState extends State<ContactCreateScreen> {
           key: _formKey,
           child: Column(children: [
             TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              onSaved: ((newValue) => fullName = newValue),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(labelText: 'Full name'),
-            ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onSaved: ((newValue) => fullName = newValue),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(labelText: 'Full name'),
+                key: const ValueKey('fullname')),
             TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              onSaved: ((newValue) => phoneNumber = newValue),
-              keyboardType: TextInputType.phone,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(labelText: 'Phone number'),
-            ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onSaved: ((newValue) => phoneNumber = newValue),
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(labelText: 'Phone number'),
+                key: const ValueKey("phone")),
             Consumer<ContactCreateViewModel>(
               builder: (_, value, __) => ElevatedButton(
                 onPressed:

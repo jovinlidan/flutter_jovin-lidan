@@ -71,6 +71,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         title: const Text(
           "Contacts",
           style: TextStyle(fontSize: 20),
+          key: ValueKey('ContactKey'),
         ),
         centerTitle: false,
         actions: [
