@@ -3,13 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pratikum/screen/contact/contact_create_view_model.dart';
 import 'package:pratikum/screen/contact/contact_detail_view_model.dart';
 import 'package:pratikum/screen/contact/contacts_view_model.dart';
-import 'package:pratikum/screen/foods/foods_screen.dart';
+import 'package:pratikum/screen/foods/food_counts_screen.dart';
 import 'package:pratikum/screen/foods/foods_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('Foods screen', (WidgetTester tester) async {
-    Widget fd = const FoodsScreen();
+  testWidgets('Food Counts screen', (WidgetTester tester) async {
+    Widget ctc = const FoodCountsScreen();
     await tester.pumpFrames(
         MaterialApp(
           home: MultiProvider(
@@ -27,24 +27,13 @@ void main() {
                 create: (_) => FoodsViewModel(),
               )
             ],
-            child: fd,
+            child: ctc,
           ),
         ),
         const Duration(seconds: 10));
-    expect(find.byWidget(fd), findsOneWidget);
-    expect(find.text("Foods"), findsOneWidget);
-    expect(find.text("Nasi Goreng"), findsOneWidget);
 
-    expect(find.byWidgetPredicate((widget) => widget is Scaffold), findsOneWidget);
-    expect(find.byWidgetPredicate((widget) => widget is AppBar), findsOneWidget);
-    expect(find.byWidgetPredicate((widget) => widget is Consumer), findsOneWidget);
-
-    await tester.dragFrom(tester.getTopLeft(find.byType(MaterialApp)), const Offset(300, 0));
-    await tester.pumpAndSettle();
-
-    expect(find.text("Foods"), findsWidgets);
-    expect(find.text("Contacts"), findsOneWidget);
-
-    expect(find.byWidgetPredicate((widget) => widget is ListView), findsWidgets);
+    expect(find.byWidget(ctc), findsOneWidget);
+    expect(find.text("Food Counts"), findsOneWidget);
+    expect(find.text("2"), findsOneWidget);
   });
 }

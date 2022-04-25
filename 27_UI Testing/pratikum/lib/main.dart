@@ -6,6 +6,7 @@ import 'package:pratikum/screen/contact/contact_detail_screen.dart';
 import 'package:pratikum/screen/contact/contact_detail_view_model.dart';
 import 'package:pratikum/screen/contact/contacts_screen.dart';
 import 'package:pratikum/screen/contact/contacts_view_model.dart';
+import 'package:pratikum/screen/foods/food_counts_screen.dart';
 import 'package:pratikum/screen/foods/foods_screen.dart';
 import 'package:pratikum/screen/foods/foods_view_model.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,8 @@ void main() {
           '/contact-create': (context) => const ContactCreateScreen(),
           '/contact-detail': (context) => const ContactDetailScreen(),
           '/contact-counts': (context) => const ContactCountsScreen(),
-          '/foods': (context) => const FoodsScreen()
+          '/foods': (context) => const FoodsScreen(),
+          '/food-counts': (context) => const FoodCountsScreen()
         },
       ),
     ),

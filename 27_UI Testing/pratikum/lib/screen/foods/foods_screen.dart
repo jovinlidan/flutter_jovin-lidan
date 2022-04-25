@@ -24,6 +24,9 @@ class _FoodsScreenState extends State<FoodsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.food_bank),
+          onPressed: () => Navigator.pushNamed(context, '/food-counts')),
       drawer: Drawer(
         child: ListView(
           // Important: Remove any padding from the ListView.

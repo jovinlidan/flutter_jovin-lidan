@@ -34,5 +34,6 @@ void main() {
 
     expect(find.byWidget(ctc), findsOneWidget);
     expect(find.text("Contact Counts"), findsOneWidget);
+    expect(find.text("1"), findsOneWidget);
   });
 }
