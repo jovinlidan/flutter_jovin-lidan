@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mini_project/helpers/providers/auth_manager.dart';
 import 'package:mini_project/helpers/providers/form_manager.dart';
 import 'package:mini_project/helpers/validator.dart';
 import 'package:mini_project/model/auth_model.dart';
 import 'package:mini_project/services/services.dart';
-import 'package:mini_project/view_models/login_view_model.dart';
+import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/widgets/auth_header.dart';
 import 'package:mini_project/widgets/form.dart';
 import 'package:mini_project/widgets/inputs/text_input.dart';
@@ -40,10 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _formManager.getValueForField('email'),
           password: _formManager.getValueForField('password'));
 
-      final res = await Provider.of<LoginViewModel>(context, listen: false).login(input: input);
+      final res = await Provider.of<AuthViewModel>(context, listen: false).login(input: input);
       if (res.status == ApiStatus.success && res.data?.token != null) {
-        await Provider.of<AuthManager>(context, listen: false)
-            .setToken(token: res.data!.token as String);
+        // await Provider.of<AuthViewModel>(context, listen: false)
+        //     .setToken(token: res.data!.token as String);
         Navigator.pushNamed(context, '/');
       } else {
         if (res.message != null) {
@@ -104,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               setState(() => isPasswordShow = !isPasswordShow),
                           validator: (String? val) => Validator.validate(val, [Validator.min5])),
                       const SizedBox(height: 24),
-                      Consumer<LoginViewModel>(
+                      Consumer<AuthViewModel>(
                         builder: (_, state, __) => ElevatedButton.icon(
                           icon: state.token?.status == ApiStatus.loading
                               ? Container(

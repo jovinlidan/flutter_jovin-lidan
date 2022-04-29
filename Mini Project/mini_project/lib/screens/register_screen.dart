@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mini_project/helpers/providers/auth_manager.dart';
 import 'package:mini_project/helpers/providers/form_manager.dart';
 import 'package:mini_project/helpers/validator.dart';
 import 'package:mini_project/model/auth_model.dart';
 import 'package:mini_project/services/services.dart';
-import 'package:mini_project/view_models/register_view_model.dart';
+import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/widgets/auth_header.dart';
 import 'package:mini_project/widgets/form.dart';
 import 'package:mini_project/widgets/inputs/text_input.dart';
@@ -42,11 +41,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: _formManager.getValueForField('password'),
           firstName: _formManager.getValueForField('email'));
 
-      final res =
-          await Provider.of<RegisterViewModel>(context, listen: false).register(input: input);
+      final res = await Provider.of<AuthViewModel>(context, listen: false).register(input: input);
       if (res.status == ApiStatus.success && res.data?.token != null) {
-        await Provider.of<AuthManager>(context, listen: false)
-            .setToken(token: res.data!.token as String);
         Navigator.pushNamed(context, '/');
       } else {
         if (res.message != null) {
@@ -152,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return Validator.validate(val, [Validator.min5]);
                           }),
                       const SizedBox(height: 24),
-                      Consumer<RegisterViewModel>(
+                      Consumer<AuthViewModel>(
                         builder: (_, state, __) => ElevatedButton.icon(
                           icon: state.token?.status == ApiStatus.loading
                               ? Container(
