@@ -13,6 +13,9 @@ class CarouselWidget extends StatefulWidget {
 }
 
 class _CarouselWidgetState extends State<CarouselWidget> {
+  final CarouselController _controller = CarouselController();
+  int _current = 0;
+
   @override
   Widget build(BuildContext context) {
     if (widget.isLoading || widget.data == null) {
@@ -30,36 +33,68 @@ class _CarouselWidgetState extends State<CarouselWidget> {
         ),
       );
     }
-    return CarouselSlider(
-      options: CarouselOptions(
-        aspectRatio: 16 / 9,
-        viewportFraction: 1,
-      ),
-      items: widget.data?.map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              child: InkWell(
-                onTap: () {},
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    i.image!,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        CarouselSlider(
+          carouselController: _controller,
+          options: CarouselOptions(
+              autoPlay: true,
+              aspectRatio: 16 / 9,
+              viewportFraction: 1,
+              onPageChanged: (index, __) {
+                setState(() {
+                  _current = index;
+                });
+              }),
+          items: widget.data?.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  child: InkWell(
+                    onTap: () {},
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        i.image!,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
 
-                      return const Center(child: CircularProgressIndicator());
-                      // You can use LinearProgressIndicator, CircularProgressIndicator, or a GIF instead
-                    },
+                          return const Center(child: CircularProgressIndicator());
+                          // You can use LinearProgressIndicator, CircularProgressIndicator, or a GIF instead
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             );
-          },
-        );
-      }).toList(),
+          }).toList(),
+        ),
+        Positioned(
+          bottom: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: widget.data!.asMap().entries.map((entry) {
+              return GestureDetector(
+                onTap: () => _controller.animateToPage(entry.key),
+                child: Container(
+                  width: _current == entry.key ? 12.0 : 8.0,
+                  height: _current == entry.key ? 12.0 : 8.0,
+                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue, style: BorderStyle.solid, width: 1),
+                      shape: BoxShape.circle,
+                      color: (_current == entry.key ? Colors.blue[900]! : Colors.white)
+                          .withOpacity(_current == entry.key ? 1 : 1)),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 }
