@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mini_project/view_models/auth_view_model.dart';
+import 'package:mini_project/view_models/token_view_model.dart';
 import 'package:mini_project/widgets/components/common/setting_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,7 @@ class SettingsFragment extends StatefulWidget {
 
 class _SettingsFragmentState extends State<SettingsFragment> {
   void handleLogout() async {
-    await Provider.of<AuthViewModel>(context, listen: false).revokeToken();
+    await Provider.of<TokenViewModel>(context, listen: false).revokeToken();
     Navigator.pushNamed(context, '/');
   }
 

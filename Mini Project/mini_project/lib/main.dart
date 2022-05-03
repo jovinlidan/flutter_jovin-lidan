@@ -9,6 +9,7 @@ import 'package:mini_project/view_models/carousel_view_model.dart';
 import 'package:mini_project/view_models/course_view_model.dart';
 import 'package:mini_project/view_models/courses_view_model.dart';
 import 'package:mini_project/view_models/posts_view_model.dart';
+import 'package:mini_project/view_models/token_view_model.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CoursesViewModel()),
         ChangeNotifierProvider(create: (_) => CourseViewModel()),
         ChangeNotifierProvider(create: (_) => PostsViewModel()),
+        ChangeNotifierProvider(create: (_) => TokenViewModel()),
       ],
       child: const MyApp(),
     );
@@ -49,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     // return const MaterialApp(
     //   home: VideoPlayerWidget(),
     // );
-    return Consumer<AuthViewModel>(
+    return Consumer<TokenViewModel>(
       builder: (_, state, ___) => FutureBuilder(
         future: state.setupToken(),
         builder: (_, tokenSnapshot) {
