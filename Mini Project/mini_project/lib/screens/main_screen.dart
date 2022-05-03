@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icons.feed_outlined,
       selectedIcon: Icons.feed,
       text: "Feed",
-      child: Text("Test"),
+      child: const Text("Test"),
     ),
     BottomBar(
       icon: Icons.settings_outlined,
@@ -52,9 +52,7 @@ class _MainScreenState extends State<MainScreen> {
           Image.asset(
             'assets/images/main_header.png',
           ),
-          SingleChildScrollView(
-            child: pages[_curPageIdx].child,
-          ),
+          pages[_curPageIdx].child
         ]),
       ),
       bottomNavigationBar: NavigationBarTheme(
