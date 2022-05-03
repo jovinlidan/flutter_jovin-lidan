@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_project/constants/color.constant.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -13,11 +14,12 @@ class _HomeProfileState extends State<HomeProfile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        border: Border.all(color: CustomColors.primary3, width: 1),
+        borderRadius: const BorderRadius.all(
           Radius.circular(8),
         ),
-        color: Color.fromRGBO(0, 99, 178, 1),
+        color: CustomColors.primary1,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Consumer<UserViewModel>(
@@ -30,7 +32,7 @@ class _HomeProfileState extends State<HomeProfile> {
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),
-                color: Color.fromRGBO(156, 195, 213, 1),
+                color: CustomColors.primary2,
               ),
             ),
             const SizedBox(

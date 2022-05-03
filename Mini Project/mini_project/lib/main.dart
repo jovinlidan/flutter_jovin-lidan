@@ -8,6 +8,7 @@ import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/view_models/carousel_view_model.dart';
 import 'package:mini_project/view_models/course_view_model.dart';
 import 'package:mini_project/view_models/courses_view_model.dart';
+import 'package:mini_project/view_models/posts_view_model.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CarouselViewModel()),
         ChangeNotifierProvider(create: (_) => CoursesViewModel()),
         ChangeNotifierProvider(create: (_) => CourseViewModel()),
+        ChangeNotifierProvider(create: (_) => PostsViewModel()),
       ],
       child: const MyApp(),
     );

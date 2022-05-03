@@ -45,6 +45,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             state.course?.data?.title ?? "",

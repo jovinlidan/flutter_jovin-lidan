@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mini_project/constants/color.constant.dart';
+import 'package:mini_project/widgets/fragments/feed_fragment.dart';
 import 'package:mini_project/widgets/fragments/home_fragment.dart';
 import 'package:mini_project/widgets/fragments/settings_fragment.dart';
 
@@ -32,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icons.feed_outlined,
       selectedIcon: Icons.feed,
       text: "Feed",
-      child: const Text("Test"),
+      child: const FeedFragment(),
     ),
     BottomBar(
       icon: Icons.settings_outlined,
@@ -46,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(0, 29, 105, 1),
+      backgroundColor: CustomColors.primary1,
       body: SafeArea(
         child: Stack(children: [
           Image.asset(
@@ -55,18 +57,26 @@ class _MainScreenState extends State<MainScreen> {
           pages[_curPageIdx].child
         ]),
       ),
+      floatingActionButton: _curPageIdx == 1
+          ? FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: CustomColors.primary2,
+              foregroundColor: CustomColors.primary1,
+              child: const Icon(Icons.add),
+            )
+          : Container(),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: Colors.transparent,
           labelTextStyle: MaterialStateProperty.all(
-            const TextStyle(fontSize: 12, color: Color.fromRGBO(142, 151, 253, 1)),
+            const TextStyle(fontSize: 12, color: CustomColors.primary2),
           ),
         ),
         child: Container(
           decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: Color.fromARGB(255, 17, 75, 223), width: 1.0))),
+              border: Border(top: BorderSide(color: CustomColors.primary4, width: 1.0))),
           child: NavigationBar(
-            backgroundColor: const Color.fromRGBO(0, 29, 105, 1),
+            backgroundColor: CustomColors.primary1,
             labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
             selectedIndex: _curPageIdx,
             height: 60,
@@ -75,11 +85,11 @@ class _MainScreenState extends State<MainScreen> {
                 .map((e) => NavigationDestination(
                       icon: Icon(
                         e.icon,
-                        color: const Color.fromRGBO(81, 89, 121, 1),
+                        color: CustomColors.primary3,
                       ),
                       selectedIcon: Icon(
                         e.selectedIcon,
-                        color: const Color.fromRGBO(142, 151, 253, 1),
+                        color: CustomColors.primary2,
                       ),
                       label: e.text,
                     ))
