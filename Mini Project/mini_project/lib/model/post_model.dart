@@ -1,14 +1,24 @@
+import 'package:mini_project/model/post_comment_model.dart';
 import 'package:mini_project/model/user_model.dart';
 
 class Post {
   String? sId;
+  List<PostComment>? comments;
+  DateTime? createdAt;
   String? description;
   List<User>? user;
 
-  Post({this.sId, this.description, this.user});
+  Post({this.sId, this.comments, this.createdAt, this.description, this.user});
 
   Post.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
+    if (json['comments'] != null) {
+      comments = <PostComment>[];
+      json['comments'].forEach((v) {
+        comments!.add(PostComment.fromJson(v));
+      });
+    }
+    createdAt = DateTime.parse(json['createdAt']);
     description = json['description'];
     if (json['user'] != null) {
       user = <User>[];
@@ -21,6 +31,10 @@ class Post {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
+    if (comments != null) {
+      data['comments'] = comments!.map((v) => v.toJson()).toList();
+    }
+    data['createdAt'] = createdAt;
     data['description'] = description;
     if (user != null) {
       data['user'] = user!.map((v) => v.toJson()).toList();

@@ -17,6 +17,7 @@ class PostsViewModel with ChangeNotifier {
     try {
       changeState(ApiResponse(status: ApiStatus.loading));
       final res = await PostAPI.getPosts();
+
       changeState(ApiResponse<List<Post>>(data: res, status: ApiStatus.success));
     } catch (e) {
       if (e is DioError) {

@@ -22,7 +22,7 @@ class BottomBar {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _curPageIdx = 0;
+  int _curPageIdx = 1;
   final List<BottomBar> pages = [
     BottomBar(
       icon: Icons.home_outlined,
@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
           ? FloatingActionButton(
               onPressed: () {},
               backgroundColor: CustomColors.primary2,
-              foregroundColor: CustomColors.primary1,
+              foregroundColor: Colors.white,
               child: const Icon(Icons.add),
             )
           : Container(),
