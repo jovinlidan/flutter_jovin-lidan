@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project/screens/course_detail_screen.dart';
+import 'package:mini_project/screens/create_post_screen.dart';
 import 'package:mini_project/screens/intro_screen.dart';
 import 'package:mini_project/screens/login_screen.dart';
 import 'package:mini_project/screens/main_screen.dart';
+import 'package:mini_project/screens/post_detail_screen.dart';
 import 'package:mini_project/screens/register_screen.dart';
 import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/view_models/carousel_view_model.dart';
 import 'package:mini_project/view_models/course_view_model.dart';
 import 'package:mini_project/view_models/courses_view_model.dart';
+import 'package:mini_project/view_models/create_post_view_model.dart';
+import 'package:mini_project/view_models/post_comments_view_model.dart';
+import 'package:mini_project/view_models/post_view_model.dart';
 import 'package:mini_project/view_models/posts_view_model.dart';
 import 'package:mini_project/view_models/token_view_model.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
@@ -31,6 +36,9 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CourseViewModel()),
         ChangeNotifierProvider(create: (_) => PostsViewModel()),
         ChangeNotifierProvider(create: (_) => TokenViewModel()),
+        ChangeNotifierProvider(create: (_) => CreatePostViewModel()),
+        ChangeNotifierProvider(create: (_) => PostViewModel()),
+        ChangeNotifierProvider(create: (_) => PostCommentsViewModel()),
       ],
       child: const MyApp(),
     );
@@ -45,7 +53,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
+  Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case "/course-detail":
+        final String id = (settings.arguments ?? "626e792c055c8bad64bc2131") as String;
+        return MaterialPageRoute(builder: (context) => CourseDetailScreen(id: id));
+      case "/post-detail":
+        final String id = (settings.arguments ?? "626e792c055c8bad64bc2131") as String;
+        return MaterialPageRoute(builder: (context) => PostDetailScreen(id: id));
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     // return const MaterialApp(
@@ -73,18 +92,10 @@ class _MyAppState extends State<MyApp> {
                             tokenSnapshot.data != null ? const MainScreen() : const IntroScreen(),
                         '/register': (context) => const RegisterScreen(),
                         '/login': (context) => const LoginScreen(),
-                        // '/main': (context) => const MainScreen(),
+                        '/create-post': (context) => const CreatePostScreen()
                       },
                       initialRoute: '/',
-                      onGenerateRoute: (settings) {
-                        if (settings.name == "/course-detail") {
-                          final String id =
-                              (settings.arguments ?? "626e792c055c8bad64bc2131") as String;
-                          return MaterialPageRoute(
-                              builder: (context) => CourseDetailScreen(id: id));
-                        }
-                        return null;
-                      },
+                      onGenerateRoute: onGenerateRoute,
                     );
                   }
                   return const SizedBox.shrink();

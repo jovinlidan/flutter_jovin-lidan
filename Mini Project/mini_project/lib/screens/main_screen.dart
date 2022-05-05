@@ -43,6 +43,11 @@ class _MainScreenState extends State<MainScreen> {
       child: const SettingsFragment(),
     ),
   ];
+
+  void onNavigateCreatePost() {
+    Navigator.pushNamed(context, '/create-post');
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -59,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: _curPageIdx == 1
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: onNavigateCreatePost,
               backgroundColor: CustomColors.primary2,
               foregroundColor: Colors.white,
               child: const Icon(Icons.add),

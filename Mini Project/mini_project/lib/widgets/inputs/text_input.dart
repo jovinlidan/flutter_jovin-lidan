@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project/helpers/providers/form_manager.dart';
-import 'package:mini_project/helpers/validator.dart';
 import 'package:provider/provider.dart';
 
 class TextInput extends StatefulWidget {
   IconData? prefixIcon;
   IconData? suffixIcon;
   String? placeholder;
-  String label;
+  String? label;
   String name;
   bool obscureText;
   void Function(TextEditingController tec)? onSuffixIconPress;
   String? Function(String? val)? validator;
+  late bool expands;
+  late int? minLines;
+  late int? maxLines;
+  late TextStyle? style;
+  late TextStyle? hintStyle;
 
   TextInput({
     Key? key,
@@ -19,10 +23,15 @@ class TextInput extends StatefulWidget {
     this.suffixIcon,
     this.onSuffixIconPress,
     this.placeholder,
-    required this.label,
+    this.label,
     this.validator,
     required this.name,
     this.obscureText = false,
+    this.expands = false,
+    this.maxLines = 1,
+    this.minLines = 1,
+    this.style,
+    this.hintStyle,
   }) : super(key: key);
 
   @override
@@ -35,11 +44,10 @@ class _TextInputState extends State<TextInput> {
   @override
   Widget build(BuildContext context) {
     if (context.read<FormManager>().getValueForField(widget.name) != null) {}
-    print("test");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.label),
+        widget.label != null ? Text(widget.label!) : const SizedBox.shrink(),
         Container(
           decoration: BoxDecoration(
             border: Border(
@@ -62,6 +70,9 @@ class _TextInputState extends State<TextInput> {
               ),
               Flexible(
                 child: TextFormField(
+                  expands: widget.expands,
+                  minLines: widget.minLines,
+                  maxLines: widget.maxLines,
                   controller: textEditingController,
                   obscureText: widget.obscureText,
                   onChanged: (value) =>
@@ -70,7 +81,9 @@ class _TextInputState extends State<TextInput> {
                     hintText: widget.placeholder,
                     border: InputBorder.none,
                     errorStyle: const TextStyle(height: 0, color: Colors.transparent),
+                    hintStyle: widget.hintStyle,
                   ),
+                  style: widget.style,
                   onSaved: (String? value) =>
                       context.read<FormManager>().setValueForField(widget.name, value),
                   validator:

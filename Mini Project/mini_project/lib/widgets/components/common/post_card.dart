@@ -36,18 +36,24 @@ class PostHeader extends StatelessWidget {
 
 class PostCard extends StatelessWidget {
   final Post post;
-  const PostCard({Key? key, required this.post}) : super(key: key);
+  final bool hasDetail;
+  const PostCard({Key? key, required this.post, this.hasDetail = true}) : super(key: key);
+
+  void onNavigatePostDetail(BuildContext context) {
+    Navigator.pushNamed(context, '/post-detail', arguments: post.sId);
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: hasDetail ? () => onNavigatePostDetail(context) : null,
       child: Container(
         margin: const EdgeInsets.only(top: 8, bottom: 8),
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             color: CustomColors.primary1,
-            border: Border(bottom: BorderSide(color: CustomColors.primary4, width: 1))),
+            border:
+                Border(bottom: BorderSide(color: CustomColors.primary4, width: hasDetail ? 1 : 2))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,10 +72,12 @@ class PostCard extends StatelessWidget {
                 const SizedBox(
                   width: 8,
                 ),
-                Text("${post.comments?.length ?? 0} Comments",
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ))
+                Text(
+                  "${post.comments?.length ?? 0} Comments",
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                )
               ],
             )
           ],

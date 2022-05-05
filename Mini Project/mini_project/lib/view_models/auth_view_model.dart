@@ -4,8 +4,6 @@ import 'package:mini_project/model/api/auth_api.dart';
 import 'package:mini_project/model/auth_model.dart';
 import 'package:mini_project/services/services.dart';
 
-const tokenKey = "auth_token";
-
 class AuthViewModel extends ChangeNotifier {
   ApiResponse<TokenResult>? _token = ApiResponse(status: ApiStatus.success);
 

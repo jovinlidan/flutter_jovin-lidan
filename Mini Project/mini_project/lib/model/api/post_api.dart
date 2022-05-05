@@ -13,4 +13,10 @@ class PostAPI {
     final response = await repo.get(url: 'Posts/$id?\$lookup=*');
     return await Future.value(Post.fromJson(response));
   }
+
+  static Future<PostResult> createPost({required PostInput input}) async {
+    Services repo = Services();
+    final response = await repo.post(url: 'Posts', data: input);
+    return await Future.value(PostResult.fromJson(response));
+  }
 }
