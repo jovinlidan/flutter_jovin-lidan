@@ -44,8 +44,9 @@ class PostCommentCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       decoration: const BoxDecoration(
-          color: CustomColors.primary1,
-          border: Border(bottom: BorderSide(color: CustomColors.primary4, width: 1))),
+        color: CustomColors.primary1,
+        border: Border(bottom: BorderSide(color: CustomColors.primary4, width: 0.5)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

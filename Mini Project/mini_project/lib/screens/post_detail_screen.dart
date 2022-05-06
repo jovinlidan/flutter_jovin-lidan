@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mini_project/constants/color.constant.dart';
 import 'package:mini_project/helpers/providers/form_manager.dart';
 import 'package:mini_project/helpers/validator.dart';
+import 'package:mini_project/model/post_comment_model.dart';
 import 'package:mini_project/model/post_model.dart';
 import 'package:mini_project/services/services.dart';
+import 'package:mini_project/view_models/create_post_comment_view_model.dart';
 import 'package:mini_project/view_models/post_comments_view_model.dart';
 import 'package:mini_project/view_models/post_view_model.dart';
+import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:mini_project/widgets/components/common/post_card.dart';
 import 'package:mini_project/widgets/components/common/post_comment_card.dart';
 import 'package:mini_project/widgets/form.dart';
@@ -37,6 +40,29 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       Provider.of<PostCommentsViewModel>(context, listen: false).getPostComments(postId: widget.id);
     });
     super.didChangeDependencies();
+  }
+
+  void onSubmit() async {
+    if (_formManager.erroredFields.isEmpty) {
+      final PostCommentInput input = PostCommentInput(
+        description: _formManager.getValueForField('description'),
+        user: [context.read<UserViewModel>().user?.data?.sId ?? ""],
+        post: [widget.id],
+      );
+
+      final res = await Provider.of<CreatePostCommentViewModel>(context, listen: false)
+          .createPostComment(input: input);
+      if (res.status == ApiStatus.success) {
+        _formManager.resetForm();
+        await Provider.of<PostViewModel>(context, listen: false).getPost(id: widget.id);
+        Provider.of<PostCommentsViewModel>(context, listen: false)
+            .getPostComments(postId: widget.id);
+      } else {
+        if (res.message != null) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.message!)));
+        }
+      }
+    }
   }
 
   @override
@@ -84,10 +110,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                          "${context.read<PostViewModel>().post?.data?.comments?.length ?? 0} Comments",
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                      child: Consumer<PostViewModel>(
+                        builder: (_, state, __) => Text(
+                            "${state.post?.data?.comments?.length ?? 0} Comments",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                      ),
                     ),
                     Consumer<PostCommentsViewModel>(
                       builder: (_, state, __) => Column(
@@ -116,7 +144,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             Container(
               decoration: const BoxDecoration(
                   border: Border(top: BorderSide(color: CustomColors.primary4, width: 2))),
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
               child: Row(
                 children: [
                   Expanded(
@@ -142,7 +170,15 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       ),
                     ),
                   ),
-                  TextButton(onPressed: () {}, child: const Text("Post"))
+                  Consumer<CreatePostCommentViewModel>(
+                    builder: (_, state, __) => TextButton(
+                      onPressed: state.commentResult?.status == ApiStatus.loading ? null : onSubmit,
+                      child: state.commentResult?.status == ApiStatus.loading
+                          ? const SizedBox(
+                              width: 16, height: 16, child: CircularProgressIndicator())
+                          : const Text("Post"),
+                    ),
+                  )
                 ],
               ),
             ),

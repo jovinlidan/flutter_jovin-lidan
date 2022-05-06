@@ -10,6 +10,7 @@ import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/view_models/carousel_view_model.dart';
 import 'package:mini_project/view_models/course_view_model.dart';
 import 'package:mini_project/view_models/courses_view_model.dart';
+import 'package:mini_project/view_models/create_post_comment_view_model.dart';
 import 'package:mini_project/view_models/create_post_view_model.dart';
 import 'package:mini_project/view_models/post_comments_view_model.dart';
 import 'package:mini_project/view_models/post_view_model.dart';
@@ -39,6 +40,7 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CreatePostViewModel()),
         ChangeNotifierProvider(create: (_) => PostViewModel()),
         ChangeNotifierProvider(create: (_) => PostCommentsViewModel()),
+        ChangeNotifierProvider(create: (_) => CreatePostCommentViewModel()),
       ],
       child: const MyApp(),
     );

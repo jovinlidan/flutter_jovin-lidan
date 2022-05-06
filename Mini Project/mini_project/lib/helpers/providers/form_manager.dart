@@ -13,6 +13,13 @@ class FormManager with ChangeNotifier {
     });
   }
 
+  void resetForm() {
+    for (var key in _fieldStates.keys) {
+      setValueForField(key, "");
+    }
+    _fieldStates.clear();
+  }
+
   String? getErrorMessageForField(String key) {
     _ensureExists(key);
     return _fieldStates[key]?.errorMessage;
@@ -59,5 +66,5 @@ class FormFieldState {
   String? errorMessage;
   String? value;
 
-  FormFieldState({required this.key}) : hasError = false {}
+  FormFieldState({required this.key}) : hasError = false;
 }

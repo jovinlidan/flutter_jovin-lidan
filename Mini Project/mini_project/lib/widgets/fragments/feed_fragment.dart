@@ -13,7 +13,7 @@ class FeedFragment extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 20, bottom: 12),
+            padding: EdgeInsets.only(left: 20, bottom: 12, top: 12),
             child: Text(
               "Feed",
               style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),

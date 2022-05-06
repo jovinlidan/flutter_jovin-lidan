@@ -42,8 +42,21 @@ class _TextInputState extends State<TextInput> {
   TextEditingController textEditingController = TextEditingController();
 
   @override
+  void didChangeDependencies() {
+    final val = Provider.of<FormManager>(context).getValueForField(widget.name);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      textEditingController.value = TextEditingValue(
+        text: val ?? "",
+        selection: TextSelection.fromPosition(
+          TextPosition(offset: (val ?? "").length),
+        ),
+      );
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (context.read<FormManager>().getValueForField(widget.name) != null) {}
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
