@@ -72,7 +72,7 @@ class PostInput {
 
 class PostResult {
   String? sId;
-  List<PostComment>? comments;
+  List<String>? comments;
   DateTime? createdAt;
   String? description;
   List<String>? user;
@@ -82,9 +82,9 @@ class PostResult {
   PostResult.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     if (json['comments'] != null) {
-      comments = <PostComment>[];
+      comments = <String>[];
       json['comments'].forEach((v) {
-        comments!.add(PostComment.fromJson(v));
+        comments!.add((v));
       });
     }
     createdAt = DateTime.parse(json['createdAt']);
@@ -101,7 +101,7 @@ class PostResult {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
     if (comments != null) {
-      data['comments'] = comments!.map((v) => v.toJson()).toList();
+      data['comments'] = comments!.map((v) => v).toList();
     }
     data['createdAt'] = createdAt;
     data['description'] = description;

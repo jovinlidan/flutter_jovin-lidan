@@ -6,8 +6,10 @@ import 'package:mini_project/model/post_comment_model.dart';
 import 'package:mini_project/model/post_model.dart';
 import 'package:mini_project/services/services.dart';
 import 'package:mini_project/view_models/create_post_comment_view_model.dart';
+import 'package:mini_project/view_models/delete_post_view_model.dart';
 import 'package:mini_project/view_models/post_comments_view_model.dart';
 import 'package:mini_project/view_models/post_view_model.dart';
+import 'package:mini_project/view_models/posts_view_model.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:mini_project/widgets/components/common/post_card.dart';
 import 'package:mini_project/widgets/components/common/post_comment_card.dart';
@@ -65,6 +67,57 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     }
   }
 
+  Future<void> _showMyDialog(context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: CustomColors.primary1,
+          title: const Text('Hapus Postingan?', style: TextStyle(color: Colors.white70)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Apakah anda yakin ingin menghapus postingan ini?',
+                    style: TextStyle(color: Colors.white70)),
+                SizedBox(
+                  height: 8,
+                ),
+                Text('Langkah ini tidak dapat dibatalkan',
+                    style: TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Hapus',
+                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+              onPressed: () => onDeletePost(context),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void onDeletePost(BuildContext context) async {
+    final res = await Provider.of<DeletePostViewModel>(context, listen: false)
+        .deletePost(postId: widget.id);
+    if (res.status == ApiStatus.success) {
+      Provider.of<PostsViewModel>(context, listen: false).getPosts();
+      Navigator.of(context).popUntil((route) => route.settings.name == '/');
+    } else {
+      if (res.message != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.message!)));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,18 +128,30 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         centerTitle: false,
         titleSpacing: 0,
         elevation: 0,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            // child: Consumer<CreatePostViewModel>(
-            //   builder: (_, state, __) => IconButton(
-            //     onPressed: state.postResult?.status == ApiStatus.loading ? null : onSubmit,
-            //     icon: state.postResult?.status == ApiStatus.loading
-            //         ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator())
-            //         : const Icon(Icons.send),
-            //   ),
-            // ),
-          )
+        actions: [
+          Consumer<PostViewModel>(
+            builder: (_, state, __) => state.post?.status != ApiStatus.loading &&
+                    state.post?.data != null
+                ? state.post?.data?.user![0].sId == context.read<UserViewModel>().user?.data?.sId
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Consumer<DeletePostViewModel>(
+                          builder: (_, state, __) => IconButton(
+                            onPressed: state.postResult?.status == ApiStatus.loading
+                                ? null
+                                : () => _showMyDialog(context),
+                            icon: state.postResult?.status == ApiStatus.loading
+                                ? const SizedBox(
+                                    width: 16, height: 16, child: CircularProgressIndicator())
+                                : const Icon(Icons.delete_forever_outlined, color: Colors.red),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink()
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          ),
         ],
       ),
       body: SafeArea(

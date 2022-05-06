@@ -19,4 +19,10 @@ class PostAPI {
     final response = await repo.post(url: 'Posts', data: input);
     return await Future.value(PostResult.fromJson(response));
   }
+
+  static Future<PostResult> deletePost({required String postId}) async {
+    Services repo = Services();
+    final response = await repo.delete(url: 'Posts/$postId');
+    return await Future.value(PostResult.fromJson(response));
+  }
 }
