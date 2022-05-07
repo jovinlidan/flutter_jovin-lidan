@@ -22,7 +22,7 @@ class BottomBar {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _curPageIdx = 1;
+  int _curPageIdx = 0;
   final List<BottomBar> pages = [
     BottomBar(
       icon: Icons.home_outlined,

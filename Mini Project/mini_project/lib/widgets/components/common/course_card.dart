@@ -14,32 +14,29 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onNavigateCourseDetail(context),
-      child: Expanded(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              child: Image.network("", fit: BoxFit.cover),
-            ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        AspectRatio(
+          aspectRatio: 16 / 9,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            child: Image.network(course.imageUrl ?? "", fit: BoxFit.cover),
           ),
-          const SizedBox(
-            height: 4,
-          ),
-          Text("· ${course.duration}", style: const TextStyle(color: Colors.grey, fontSize: 10)),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(course.title!,
-              style:
-                  const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(DateFormat('E dd MMM yyy').format(course.createdAt!),
-              style: const TextStyle(color: Colors.grey, fontSize: 10))
-        ]),
-      ),
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Text("· ${course.duration}", style: const TextStyle(color: Colors.grey, fontSize: 10)),
+        const SizedBox(
+          height: 4,
+        ),
+        Text(course.title!,
+            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
+        const SizedBox(
+          height: 4,
+        ),
+        Text(DateFormat('E dd MMM yyy').format(course.createdAt!),
+            style: const TextStyle(color: Colors.grey, fontSize: 10))
+      ]),
     );
   }
 }

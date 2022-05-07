@@ -62,10 +62,30 @@ class _MyAppState extends State<MyApp> {
     switch (settings.name) {
       case "/course-detail":
         final String id = (settings.arguments ?? "626e792c055c8bad64bc2131") as String;
-        return MaterialPageRoute(builder: (context) => CourseDetailScreen(id: id));
+        return PageRouteBuilder(
+          settings: settings,
+          pageBuilder: (_, __, ___) => CourseDetailScreen(id: id),
+          transitionsBuilder: (_, animation, __, child) {
+            final tween = Tween(begin: const Offset(1, 1), end: Offset.zero);
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        );
       case "/post-detail":
         final String id = (settings.arguments ?? "626e792c055c8bad64bc2131") as String;
-        return MaterialPageRoute(builder: (context) => PostDetailScreen(id: id));
+        return PageRouteBuilder(
+          settings: settings,
+          pageBuilder: (_, __, ___) => PostDetailScreen(id: id),
+          transitionsBuilder: (_, animation, __, child) {
+            final tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        );
     }
     return null;
   }
@@ -77,7 +97,6 @@ class _MyAppState extends State<MyApp> {
         tokenSnapshot.connectionState == ConnectionState.waiting) {
       return const SplashScreen();
     }
-    print(userSnapshot.data);
     if (tokenSnapshot.data != null) return const MainScreen();
     return const IntroScreen();
   }
