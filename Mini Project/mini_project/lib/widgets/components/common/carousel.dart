@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_project/model/carousel_model.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CarouselWidget extends StatefulWidget {
   final List<Carousel>? data;
@@ -15,6 +16,19 @@ class CarouselWidget extends StatefulWidget {
 class _CarouselWidgetState extends State<CarouselWidget> {
   final CarouselController _controller = CarouselController();
   int _current = 0;
+
+  void openUrl() async {
+    try {
+      final Uri url = Uri.parse("https://google.com");
+      await launchUrl(url);
+    } catch (e) {
+      if (e is ArgumentError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+      } else if (e is FormatException) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +67,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: openUrl,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
