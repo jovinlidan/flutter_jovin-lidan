@@ -118,6 +118,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     }
   }
 
+  Future<dynamic> onRefresh(BuildContext context) async {
+    return await Provider.of<PostViewModel>(context, listen: false).getPost(id: widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,9 +162,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: RefreshIndicator(
+                onRefresh: () => onRefresh(context),
+                child: ListView(
                   children: [
                     Consumer<PostViewModel>(
                       builder: (_, state, __) =>

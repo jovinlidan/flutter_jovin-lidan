@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project/constants/color.constant.dart';
 import 'package:mini_project/modules/home/post_list.dart';
+import 'package:mini_project/view_models/posts_view_model.dart';
+import 'package:provider/provider.dart';
 
 class FeedFragment extends StatelessWidget {
   const FeedFragment({Key? key}) : super(key: key);
+
+  Future<dynamic> onRefresh(BuildContext ctx) async {
+    return await Provider.of<PostsViewModel>(ctx, listen: false).getPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +40,13 @@ class FeedFragment extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView(
-              children: const [
-                PostList(),
-              ],
+            child: RefreshIndicator(
+              onRefresh: () => onRefresh(context),
+              child: ListView(
+                children: const [
+                  PostList(),
+                ],
+              ),
             ),
           ),
         ],
