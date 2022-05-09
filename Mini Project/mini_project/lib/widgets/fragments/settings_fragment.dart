@@ -67,10 +67,28 @@ class _SettingsFragmentState extends State<SettingsFragment> {
         isLoading = false;
       });
     }
-    // final pickedImageFile = File(pickedImage!.path);
-    // setState(() {
-    //   imagePicked = pickedImageFile;
-    // });
+  }
+
+  void handleRemovePicture() async {
+    try {
+      if (isLoading) return;
+      setState(() {
+        isLoading = true;
+      });
+      final user = Provider.of<UserViewModel>(context, listen: false).user?.data;
+      final UpdateProfilePictureInput input = UpdateProfilePictureInput(pictureUrl: "-");
+      final res = await Provider.of<UpdateProfilePictureViewModel>(context, listen: false)
+          .updateProfilePicture(id: user?.sId ?? "", input: input);
+      await Provider.of<UserViewModel>(context, listen: false).getMe();
+      if (res.message != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.message ?? "")));
+        return;
+      }
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -87,12 +105,15 @@ class _SettingsFragmentState extends State<SettingsFragment> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Image.network(
-                  context.read<UserViewModel>().user?.data?.pictureUrl ?? "",
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
+                context.read<UserViewModel>().user?.data?.pictureUrl != null &&
+                        context.read<UserViewModel>().user?.data?.pictureUrl != '-'
+                    ? Image.network(
+                        context.read<UserViewModel>().user?.data?.pictureUrl ?? "",
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      )
+                    : CircleAvatar(radius: 40, backgroundColor: Colors.blue[900]),
                 isLoading
                     ? Container(
                         width: 80,
@@ -105,7 +126,30 @@ class _SettingsFragmentState extends State<SettingsFragment> {
             ),
           ),
         ),
-        Center(child: TextButton(onPressed: handleEditPicture, child: const Text("Edit Picture"))),
+        Center(
+            child: TextButton(
+          onPressed: handleEditPicture,
+          child: const Text("Edit Picture"),
+        )),
+        context.read<UserViewModel>().user?.data?.pictureUrl != null &&
+                context.read<UserViewModel>().user?.data?.pictureUrl != '-'
+            ? Center(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(50, 30),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      alignment: Alignment.centerLeft),
+                  onPressed: handleRemovePicture,
+                  child: const Text(
+                    "Remove Picture",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
         const SizedBox(height: 40),
         const Padding(
           padding: EdgeInsets.only(left: 20),

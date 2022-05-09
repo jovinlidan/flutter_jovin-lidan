@@ -54,6 +54,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   _ControlsOverlay(
                     controller: _controller,
                     onFullscreen: handleFullscreen,
+                    isFullscreen: _isFullscreen,
                   ),
                   VideoProgressIndicator(_controller, allowScrubbing: true),
                 ],
@@ -73,12 +74,17 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 }
 
 class _ControlsOverlay extends StatefulWidget {
-  const _ControlsOverlay({Key? key, required this.controller, required this.onFullscreen})
-      : super(key: key);
+  const _ControlsOverlay({
+    Key? key,
+    required this.controller,
+    required this.onFullscreen,
+    required this.isFullscreen,
+  }) : super(key: key);
 
   final VideoPlayerController controller;
 
   final void Function() onFullscreen;
+  final bool isFullscreen;
 
   @override
   State<_ControlsOverlay> createState() => _ControlsOverlayState();
@@ -214,7 +220,10 @@ class _ControlsOverlayState extends State<_ControlsOverlay> with TickerProviderS
                   duration: const Duration(milliseconds: 200),
                   child: GestureDetector(
                     onTap: widget.onFullscreen,
-                    child: const Icon(Icons.fullscreen, color: Colors.white, size: 20),
+                    child: Icon(
+                        widget.isFullscreen ? Icons.fullscreen_exit_outlined : Icons.fullscreen,
+                        color: Colors.white,
+                        size: 20),
                   ),
                 ))
               : const SizedBox.shrink(),
