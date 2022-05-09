@@ -54,4 +54,9 @@ class Services {
     Response<dynamic>? res = await _dio?.delete(url);
     return Future.value(res?.data);
   }
+
+  Future<dynamic>? patch<T>({required String url, required T data}) async {
+    Response<dynamic>? res = await _dio?.patch(url, data: data);
+    return Future.value(res?.data);
+  }
 }

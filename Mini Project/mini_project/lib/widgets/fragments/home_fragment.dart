@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mini_project/modules/home/course_list.dart';
+import 'package:mini_project/modules/home/home_carousel.dart';
 import 'package:mini_project/modules/home/home_profile.dart';
 
 class HomeFragment extends StatefulWidget {
@@ -25,7 +27,7 @@ class _HomeFragmentState extends State<HomeFragment> {
               height: 32,
             ),
           ),
-          // SliverToBoxAdapter(child: HomeCarousel()),
+          SliverToBoxAdapter(child: HomeCarousel()),
           SliverToBoxAdapter(
             child: SizedBox(
               height: 32,
@@ -42,7 +44,7 @@ class _HomeFragmentState extends State<HomeFragment> {
               height: 16,
             ),
           ),
-          // CourseList()
+          CourseList()
         ],
       ),
     );

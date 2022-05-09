@@ -2,8 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mini_project/model/user_model.dart';
 import 'package:mini_project/view_models/file_upload_view_model.dart';
 import 'package:mini_project/view_models/token_view_model.dart';
+import 'package:mini_project/view_models/update_profile_picture_view_model.dart';
+import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:mini_project/widgets/components/common/setting_tile.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +19,7 @@ class SettingsFragment extends StatefulWidget {
 }
 
 class _SettingsFragmentState extends State<SettingsFragment> {
+  bool isLoading = false;
   void handleLogout() async {
     await Provider.of<TokenViewModel>(context, listen: false).revokeToken();
     Navigator.pushNamed(context, '/');
@@ -23,6 +27,10 @@ class _SettingsFragmentState extends State<SettingsFragment> {
 
   void handleEditPicture() async {
     try {
+      if (isLoading) return;
+      setState(() {
+        isLoading = true;
+      });
       final picker = ImagePicker();
       final XFile? pickedImage = await picker.pickImage(
         source: ImageSource.gallery,
@@ -30,8 +38,6 @@ class _SettingsFragmentState extends State<SettingsFragment> {
         maxWidth: 64,
       );
       if (pickedImage != null) {
-        final bytes = await pickedImage.readAsBytes();
-
         FormData formData = FormData.fromMap({
           'file': await MultipartFile.fromFile(pickedImage.path),
         });
@@ -39,12 +45,16 @@ class _SettingsFragmentState extends State<SettingsFragment> {
             .uploadFile(formData: formData);
         if (res.message != null) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.message ?? "")));
+          return;
         }
-        print(res.status);
-        // print(base64Encode(bytes));
+        final user = Provider.of<UserViewModel>(context, listen: false).user?.data;
+        final UpdateProfilePictureInput input =
+            UpdateProfilePictureInput(pictureUrl: res.data?.url ?? "");
+        await Provider.of<UpdateProfilePictureViewModel>(context, listen: false)
+            .updateProfilePicture(id: user?.sId ?? "", input: input);
+        await Provider.of<UserViewModel>(context, listen: false).getMe();
       }
     } catch (e) {
-      print("e $e");
       if (e is PlatformException) {
         if (e.code == "photo_access_denied") {
           openAppSettings();
@@ -52,6 +62,10 @@ class _SettingsFragmentState extends State<SettingsFragment> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message ?? "")));
         }
       }
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
     // final pickedImageFile = File(pickedImage!.path);
     // setState(() {
@@ -68,9 +82,27 @@ class _SettingsFragmentState extends State<SettingsFragment> {
           height: 40,
         ),
         Center(
-          child: CircleAvatar(
-            backgroundColor: Colors.blue[900],
-            radius: 40,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(40),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.network(
+                  context.read<UserViewModel>().user?.data?.pictureUrl ?? "",
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+                isLoading
+                    ? Container(
+                        width: 80,
+                        height: 80,
+                        color: const Color.fromRGBO(0, 0, 0, 0.6),
+                        child: const CircularProgressIndicator(strokeWidth: 8),
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
         Center(child: TextButton(onPressed: handleEditPicture, child: const Text("Edit Picture"))),

@@ -19,6 +19,7 @@ import 'package:mini_project/view_models/post_comments_view_model.dart';
 import 'package:mini_project/view_models/post_view_model.dart';
 import 'package:mini_project/view_models/posts_view_model.dart';
 import 'package:mini_project/view_models/token_view_model.dart';
+import 'package:mini_project/view_models/update_profile_picture_view_model.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -46,6 +47,7 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CreatePostCommentViewModel()),
         ChangeNotifierProvider(create: (_) => DeletePostViewModel()),
         ChangeNotifierProvider(create: (_) => FileUploadViewModel()),
+        ChangeNotifierProvider(create: (_) => UpdateProfilePictureViewModel()),
       ],
       child: const MyApp(),
     );
