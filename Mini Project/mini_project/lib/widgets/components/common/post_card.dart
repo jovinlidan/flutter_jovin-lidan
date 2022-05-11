@@ -12,7 +12,19 @@ class PostHeader extends StatelessWidget {
     if (post.user == null || post.user!.isEmpty) return Container();
     return Row(
       children: [
-        const CircleAvatar(),
+        post.user![0].pictureUrl != null && post.user![0].pictureUrl != '-'
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Image.network(
+                    post.user![0].pictureUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : const CircleAvatar(),
         const SizedBox(
           width: 8,
         ),

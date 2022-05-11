@@ -6,13 +6,24 @@ import 'package:mini_project/model/post_comment_model.dart';
 class PostCommentHeader extends StatelessWidget {
   final PostComment comment;
   const PostCommentHeader({Key? key, required this.comment}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     if (comment.user == null || comment.user!.isEmpty) return Container();
     return Row(
       children: [
-        const CircleAvatar(),
+        comment.user![0].pictureUrl != null && comment.user![0].pictureUrl != '-'
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Image.network(
+                    comment.user![0].pictureUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : const CircleAvatar(),
         const SizedBox(
           width: 8,
         ),

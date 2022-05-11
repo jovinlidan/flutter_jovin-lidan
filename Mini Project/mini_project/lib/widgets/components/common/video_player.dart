@@ -117,6 +117,14 @@ class _ControlsOverlayState extends State<_ControlsOverlay> with TickerProviderS
     }
   }
 
+  void handleMuteUnmute() {
+    if (widget.controller.value.volume == 0) {
+      widget.controller.setVolume(1);
+    } else {
+      widget.controller.setVolume(0);
+    }
+  }
+
   void handleVisibleSetup() async {
     if (widget.controller.value.isPlaying && _visible) {
       await Future.delayed(const Duration(seconds: 3));
@@ -218,12 +226,28 @@ class _ControlsOverlayState extends State<_ControlsOverlay> with TickerProviderS
                   onEnd: handleEndAnimatedOpacity,
                   opacity: _visible ? 1 : 0,
                   duration: const Duration(milliseconds: 200),
-                  child: GestureDetector(
-                    onTap: widget.onFullscreen,
-                    child: Icon(
-                        widget.isFullscreen ? Icons.fullscreen_exit_outlined : Icons.fullscreen,
-                        color: Colors.white,
-                        size: 20),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: handleMuteUnmute,
+                        child: Icon(
+                            widget.controller.value.volume == 0
+                                ? Icons.volume_off_outlined
+                                : Icons.volume_up_outlined,
+                            color: Colors.white,
+                            size: 20),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      GestureDetector(
+                        onTap: widget.onFullscreen,
+                        child: Icon(
+                            widget.isFullscreen ? Icons.fullscreen_exit_outlined : Icons.fullscreen,
+                            color: Colors.white,
+                            size: 20),
+                      ),
+                    ],
                   ),
                 ))
               : const SizedBox.shrink(),
