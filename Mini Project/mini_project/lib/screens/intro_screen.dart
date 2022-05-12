@@ -60,6 +60,8 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IntroSlider(
+        nextButtonKey: const ValueKey('next_button_key'),
+        doneButtonKey: const ValueKey('done_button_key'),
         slides: slides,
         onDonePress: onDonePress,
         nextButtonStyle: IntroScreenStyles.nextButton,
