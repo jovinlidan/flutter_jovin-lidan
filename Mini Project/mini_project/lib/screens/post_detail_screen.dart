@@ -11,6 +11,7 @@ import 'package:mini_project/view_models/post_comments_view_model.dart';
 import 'package:mini_project/view_models/post_view_model.dart';
 import 'package:mini_project/view_models/posts_view_model.dart';
 import 'package:mini_project/view_models/user_view_model.dart';
+import 'package:mini_project/widgets/components/common/error_view.dart';
 import 'package:mini_project/widgets/components/common/post_card.dart';
 import 'package:mini_project/widgets/components/common/post_comment_card.dart';
 import 'package:mini_project/widgets/form.dart';
@@ -33,6 +34,18 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   void initState() {
     _formManager = FormManager();
     super.initState();
+  }
+
+  void getPost() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      Provider.of<PostViewModel>(context, listen: false).getPost(id: widget.id);
+    });
+  }
+
+  void getPostComments() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      Provider.of<PostCommentsViewModel>(context, listen: false).getPostComments(postId: widget.id);
+    });
   }
 
   @override
@@ -134,28 +147,27 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         elevation: 0,
         actions: [
           Consumer<PostViewModel>(
-            builder: (_, state, __) => state.post?.status != ApiStatus.loading &&
-                    state.post?.data != null
-                ? state.post?.data?.user![0].sId == context.read<UserViewModel>().user?.data?.sId
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Consumer<DeletePostViewModel>(
-                          builder: (_, state, __) => IconButton(
-                            onPressed: state.postResult?.status == ApiStatus.loading
-                                ? null
-                                : () => _showMyDialog(context),
-                            icon: state.postResult?.status == ApiStatus.loading
-                                ? const SizedBox(
-                                    width: 16, height: 16, child: CircularProgressIndicator())
-                                : const Icon(Icons.delete_forever_outlined, color: Colors.red),
+              builder: (_, state, __) => state.post?.status != ApiStatus.loading &&
+                      state.post?.data != null
+                  ? state.post?.data?.user![0].sId == context.read<UserViewModel>().user?.data?.sId
+                      ? Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Consumer<DeletePostViewModel>(
+                            builder: (_, state, __) => IconButton(
+                              onPressed: state.postResult?.status == ApiStatus.loading
+                                  ? null
+                                  : () => _showMyDialog(context),
+                              icon: state.postResult?.status == ApiStatus.loading
+                                  ? const SizedBox(
+                                      width: 16, height: 16, child: CircularProgressIndicator())
+                                  : const Icon(Icons.delete_forever_outlined, color: Colors.red),
+                            ),
                           ),
-                        ),
-                      )
-                    : const SizedBox.shrink()
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-          ),
+                        )
+                      : const SizedBox.shrink()
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    )),
         ],
       ),
       body: SafeArea(
@@ -166,17 +178,19 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                 onRefresh: () => onRefresh(context),
                 child: ListView(
                   children: [
-                    Consumer<PostViewModel>(
-                      builder: (_, state, __) =>
-                          state.post?.status != ApiStatus.loading && state.post?.data != null
-                              ? PostCard(
-                                  post: state.post?.data! as Post,
-                                  hasDetail: false,
-                                )
-                              : const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                    ),
+                    Consumer<PostViewModel>(builder: (_, state, __) {
+                      if (state.post?.status == ApiStatus.error) {
+                        return ErrorView(errorMessage: state.post?.message ?? "", refetch: getPost);
+                      }
+                      return state.post?.status != ApiStatus.loading && state.post?.data != null
+                          ? PostCard(
+                              post: state.post?.data! as Post,
+                              hasDetail: false,
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    }),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Consumer<PostViewModel>(
@@ -186,26 +200,36 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                     ),
-                    Consumer<PostCommentsViewModel>(
-                      builder: (_, state, __) => Column(
-                        children: [
-                          ...state.postComments?.status != ApiStatus.loading &&
-                                  state.postComments?.data != null
-                              ? (state.postComments!.data!
-                                  .map(
-                                    (e) => PostCommentCard(
-                                      comment: e,
-                                    ),
-                                  )
-                                  .toList())
-                              : [
-                                  const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                ],
-                        ],
-                      ),
-                    ),
+                    Consumer<PostCommentsViewModel>(builder: (_, state, __) {
+                      if (state.postComments?.status == ApiStatus.error) {
+                        return ErrorView(
+                            errorMessage: state.postComments?.message ?? "",
+                            refetch: getPostComments);
+                      }
+                      return (state.postComments?.status != ApiStatus.loading &&
+                              state.postComments?.data != null
+                          ? Column(
+                              children: [
+                                ...state.postComments?.status != ApiStatus.loading &&
+                                        state.postComments?.data != null
+                                    ? (state.postComments!.data!
+                                        .map(
+                                          (e) => PostCommentCard(
+                                            comment: e,
+                                          ),
+                                        )
+                                        .toList())
+                                    : [
+                                        const Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      ],
+                              ],
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            ));
+                    }),
                   ],
                 ),
               ),
