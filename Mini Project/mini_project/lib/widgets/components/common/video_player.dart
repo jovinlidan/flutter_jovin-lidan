@@ -5,7 +5,14 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
   String videoUrl;
-  VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
+  bool isFullscreen;
+  Function() onSwitchFullscreen;
+  VideoPlayerWidget(
+      {Key? key,
+      required this.videoUrl,
+      required this.isFullscreen,
+      required this.onSwitchFullscreen})
+      : super(key: key);
 
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
@@ -14,7 +21,6 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
-  bool _isFullscreen = false;
   @override
   void initState() {
     super.initState();
@@ -28,13 +34,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   void didUpdateWidget(covariant VideoPlayerWidget oldWidget) {
-    _controller.dispose();
-    _controller = VideoPlayerController.network(
-      widget.videoUrl,
-    );
-    _initializeVideoPlayerFuture = _controller.initialize().then((value) {
-      setState(() {});
-    });
+    if (oldWidget.videoUrl != widget.videoUrl) {
+      _controller.dispose();
+      _controller = VideoPlayerController.network(
+        widget.videoUrl,
+      );
+      _initializeVideoPlayerFuture = _controller.initialize().then((value) {
+        setState(() {});
+      });
+    }
 
     super.didUpdateWidget(oldWidget);
   }
@@ -46,16 +54,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.dispose();
   }
 
-  void handleFullscreen() {
-    setState(() {
-      _isFullscreen = !_isFullscreen;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return RotatedBox(
-      quarterTurns: _isFullscreen ? 1 : 0,
+      quarterTurns: widget.isFullscreen ? 1 : 0,
       child: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
@@ -68,8 +70,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   VideoPlayer(_controller),
                   _ControlsOverlay(
                     controller: _controller,
-                    onFullscreen: handleFullscreen,
-                    isFullscreen: _isFullscreen,
+                    onFullscreen: widget.onSwitchFullscreen,
+                    isFullscreen: widget.isFullscreen,
                   ),
                   VideoProgressIndicator(_controller, allowScrubbing: true),
                 ],

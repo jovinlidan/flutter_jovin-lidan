@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mini_project/model/content_model.dart';
 import 'package:mini_project/services/services.dart';
@@ -19,6 +20,7 @@ class CourseDetailScreen extends StatefulWidget {
 class _CourseDetailScreenState extends State<CourseDetailScreen> {
   String? currentUrl;
   String? currentId;
+  bool isFullscreen = false;
 
   void getCourse() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
@@ -46,17 +48,50 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     });
   }
 
+  void onSwitchFullscreen() {
+    setState(() {
+      isFullscreen = !isFullscreen;
+    });
+    if (isFullscreen) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // if (isFullscreen) {
+    //   return Scaffold(
+    //     backgroundColor: Colors.black,
+    //     body: Consumer<ModuleViewModel>(builder: (_, state, __) {
+    //       if (state.module?.status == ApiStatus.error) {
+    //         return ErrorView(errorMessage: state.module?.message ?? "", refetch: getCourse);
+    //       }
+    //       return (state.module?.status == ApiStatus.loading
+    //           ? const Center(
+    //               child: CircularProgressIndicator(),
+    //             )
+    //           : Center(
+    //               child: VideoPlayerWidget(
+    //                   videoUrl: currentUrl ?? "",
+    //                   isFullscreen: isFullscreen,
+    //                   onSwitchFullscreen: onSwitchFullscreen),
+    //             ));
+    //     }),
+    //   );
+    // }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: const Text("Back", style: TextStyle(fontSize: 14)),
-        centerTitle: false,
-        titleSpacing: 0,
-        elevation: 0,
-      ),
-      backgroundColor: const Color.fromRGBO(0, 29, 105, 1),
+      appBar: !isFullscreen
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+              title: const Text("Back", style: TextStyle(fontSize: 14)),
+              centerTitle: false,
+              titleSpacing: 0,
+              elevation: 0,
+            )
+          : null,
+      backgroundColor: isFullscreen ? Colors.black : const Color.fromRGBO(0, 29, 105, 1),
       body: Consumer<ModuleViewModel>(builder: (_, state, __) {
         if (state.module?.status == ApiStatus.error) {
           return ErrorView(errorMessage: state.module?.message ?? "", refetch: getCourse);
@@ -65,57 +100,71 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    VideoPlayerWidget(videoUrl: currentUrl ?? ""),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            state.module?.data?.title ?? "",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 32,
-                          ),
-                          Text(state.module?.data?.description ?? "",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Text("${state.module?.data?.duration}",
-                                  style: const TextStyle(color: Colors.white, fontSize: 13)),
-                              const SizedBox(
-                                width: 8,
+            : Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      VideoPlayerWidget(
+                          videoUrl: currentUrl ?? "",
+                          isFullscreen: isFullscreen,
+                          onSwitchFullscreen: onSwitchFullscreen),
+                      !isFullscreen
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    state.module?.data?.title ?? "",
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 32,
+                                  ),
+                                  Text(state.module?.data?.description ?? "",
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500)),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("${state.module?.data?.duration}",
+                                          style:
+                                              const TextStyle(color: Colors.white, fontSize: 13)),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                          DateFormat('E dd MMM yyy').format(
+                                              state.module?.data?.createdAt ?? DateTime.now()),
+                                          style: const TextStyle(color: Colors.white, fontSize: 13))
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text("${(state.module?.data?.contents ?? []).length} Videos",
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700)),
+                                  const SizedBox(height: 20),
+                                  ...(state.module?.data?.contents ?? []).map(
+                                    (e) => ContentCard(
+                                        content: e,
+                                        selected: e.sId == currentId,
+                                        onTap: () => onChangeVideo(e)),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                  DateFormat('E dd MMM yyy')
-                                      .format(state.module?.data?.createdAt ?? DateTime.now()),
-                                  style: const TextStyle(color: Colors.white, fontSize: 13))
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Text("${(state.module?.data?.contents ?? []).length} Videos",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 20),
-                          ...(state.module?.data?.contents ?? []).map(
-                            (e) => ContentCard(
-                                content: e,
-                                selected: e.sId == currentId,
-                                onTap: () => onChangeVideo(e)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
                 ),
               ));
       }),
