@@ -15,6 +15,8 @@ import 'package:mini_project/view_models/create_post_comment_view_model.dart';
 import 'package:mini_project/view_models/create_post_view_model.dart';
 import 'package:mini_project/view_models/delete_post_view_model.dart';
 import 'package:mini_project/view_models/file_upload_view_model.dart';
+import 'package:mini_project/view_models/module_view_model.dart';
+import 'package:mini_project/view_models/modules_view_model.dart';
 import 'package:mini_project/view_models/post_comments_view_model.dart';
 import 'package:mini_project/view_models/post_view_model.dart';
 import 'package:mini_project/view_models/posts_view_model.dart';
@@ -48,6 +50,8 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DeletePostViewModel()),
         ChangeNotifierProvider(create: (_) => FileUploadViewModel()),
         ChangeNotifierProvider(create: (_) => UpdateProfilePictureViewModel()),
+        ChangeNotifierProvider(create: (_) => ModulesViewModel()),
+        ChangeNotifierProvider(create: (_) => ModuleViewModel()),
       ],
       child: const MyApp(),
     );

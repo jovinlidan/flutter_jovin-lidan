@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mini_project/model/course_model.dart';
+import 'package:mini_project/model/module_model.dart';
 
 class CourseCard extends StatelessWidget {
-  final Course course;
+  final Module course;
   const CourseCard({Key? key, required this.course}) : super(key: key);
 
   void onNavigateCourseDetail(BuildContext context) {

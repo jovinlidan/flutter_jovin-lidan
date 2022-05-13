@@ -21,7 +21,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _controller = VideoPlayerController.network(
       widget.videoUrl,
     );
-    _initializeVideoPlayerFuture = _controller.initialize();
+    _initializeVideoPlayerFuture = _controller.initialize().then((value) {
+      setState(() {});
+    });
   }
 
   @override
