@@ -27,6 +27,8 @@ class ContentCard extends StatelessWidget {
             style: TextStyle(color: selected ? Colors.white : Colors.white54)),
         tileColor: CustomColors.primary1,
         selectedTileColor: Colors.blue[900],
+        trailing:
+            selected ? const Icon(Icons.play_arrow, color: Colors.white) : const SizedBox.shrink(),
       ),
     );
   }

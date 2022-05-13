@@ -80,10 +80,6 @@ class _SettingsFragmentState extends State<SettingsFragment> {
       final res = await Provider.of<UpdateProfilePictureViewModel>(context, listen: false)
           .updateProfilePicture(id: user?.sId ?? "", input: input);
       await Provider.of<UserViewModel>(context, listen: false).getMe();
-      if (res.message != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.message ?? "")));
-        return;
-      }
     } finally {
       setState(() {
         isLoading = false;

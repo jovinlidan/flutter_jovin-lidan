@@ -9,8 +9,6 @@ import 'package:mini_project/screens/register_screen.dart';
 import 'package:mini_project/screens/splash_screen.dart';
 import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/view_models/carousel_view_model.dart';
-import 'package:mini_project/view_models/course_view_model.dart';
-import 'package:mini_project/view_models/courses_view_model.dart';
 import 'package:mini_project/view_models/create_post_comment_view_model.dart';
 import 'package:mini_project/view_models/create_post_view_model.dart';
 import 'package:mini_project/view_models/delete_post_view_model.dart';
@@ -39,8 +37,6 @@ class MyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => CarouselViewModel()),
-        ChangeNotifierProvider(create: (_) => CoursesViewModel()),
-        ChangeNotifierProvider(create: (_) => CourseViewModel()),
         ChangeNotifierProvider(create: (_) => PostsViewModel()),
         ChangeNotifierProvider(create: (_) => TokenViewModel()),
         ChangeNotifierProvider(create: (_) => CreatePostViewModel()),

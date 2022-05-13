@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
-  final String videoUrl;
-  const VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
+  String videoUrl;
+  VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
 
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
@@ -24,6 +24,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _initializeVideoPlayerFuture = _controller.initialize().then((value) {
       setState(() {});
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant VideoPlayerWidget oldWidget) {
+    _controller.dispose();
+    _controller = VideoPlayerController.network(
+      widget.videoUrl,
+    );
+    _initializeVideoPlayerFuture = _controller.initialize().then((value) {
+      setState(() {});
+    });
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
