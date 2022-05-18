@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
+import 'package:mini_project/services/local_storage.dart';
 import 'package:mini_project/styles/intro_screen.styles.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -54,6 +55,7 @@ class _IntroScreenState extends State<IntroScreen> {
   void onDonePress() {
     // Do what you want
     Navigator.pushNamed(context, '/login');
+    LocalStorage().set(spKey: 'isNotFirsttime', data: true.toString());
   }
 
   @override

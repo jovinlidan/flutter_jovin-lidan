@@ -7,6 +7,7 @@ import 'package:mini_project/screens/main_screen.dart';
 import 'package:mini_project/screens/post_detail_screen.dart';
 import 'package:mini_project/screens/register_screen.dart';
 import 'package:mini_project/screens/splash_screen.dart';
+import 'package:mini_project/services/local_storage.dart';
 import 'package:mini_project/view_models/auth_view_model.dart';
 import 'package:mini_project/view_models/carousel_view_model.dart';
 import 'package:mini_project/view_models/create_post_comment_view_model.dart';
@@ -96,13 +97,16 @@ class _MyAppState extends State<MyApp> {
 
   Widget getInitialPage(
       {required AsyncSnapshot<Object?> tokenSnapshot,
-      required AsyncSnapshot<Object?> userSnapshot}) {
+      required AsyncSnapshot<Object?> userSnapshot,
+      required AsyncSnapshot<Object?> isNotFirsttimeSnapshot}) {
     if (userSnapshot.connectionState == ConnectionState.waiting ||
-        tokenSnapshot.connectionState == ConnectionState.waiting) {
+        tokenSnapshot.connectionState == ConnectionState.waiting ||
+        isNotFirsttimeSnapshot.connectionState == ConnectionState.waiting) {
       return const SplashScreen();
     }
     if (tokenSnapshot.data != null) return const MainScreen();
-    return const IntroScreen();
+    if (isNotFirsttimeSnapshot.data == null) return const IntroScreen();
+    return const LoginScreen();
   }
 
   @override
@@ -117,9 +121,9 @@ class _MyAppState extends State<MyApp> {
           return Consumer<UserViewModel>(
             builder: (_, state, __) => FutureBuilder(
               future: state.getMe(),
-              builder: (_, userSnapshot) {
-                // return const MaterialApp(home: Scaffold(body: HomeCourse()));
-                return MaterialApp(
+              builder: (_, userSnapshot) => FutureBuilder(
+                future: LocalStorage().get(spKey: 'isNotFirsttime'),
+                builder: (_, isNotFirsttimeSnapshot) => MaterialApp(
                   title: 'Mini Project Jovin Lidan',
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
@@ -134,11 +138,14 @@ class _MyAppState extends State<MyApp> {
                     '/create-post': (context) => const CreatePostScreen()
                   },
 
-                  home: getInitialPage(tokenSnapshot: tokenSnapshot, userSnapshot: userSnapshot),
+                  home: getInitialPage(
+                      tokenSnapshot: tokenSnapshot,
+                      userSnapshot: userSnapshot,
+                      isNotFirsttimeSnapshot: isNotFirsttimeSnapshot),
                   // initialRoute: '/',
                   onGenerateRoute: onGenerateRoute,
-                );
-              },
+                ),
+              ),
             ),
           );
         },
